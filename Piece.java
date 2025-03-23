@@ -1,6 +1,6 @@
 public class Piece{
-   private int height;
-   private int width;
+   private final int height;
+   private final int width;
    private Coordinates position;
    private final int ID;
 
