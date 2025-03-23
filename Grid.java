@@ -17,62 +17,62 @@ public class Grid{
       }
    }
 
-   public void addPiece(Piece piece) throws InvalidPieceException{
-      pieces.add(piece);
-      if(!verifyPosition(piece))
+   public void addPiece(Piece p) throws InvalidPieceException{
+      pieces.add(p);
+      if(!verifyPosition(p))
          throw new InvalidPieceException();
 
-      for(int i = piece.getX(); i < piece.getX() + piece.getWidth(); i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
             occupiedPositions[j-1][i-1] = true;
          }
       }
    }
 
-   private Boolean verifyPosition(Piece piece){
+   private Boolean verifyPosition(Piece p){
+
       // verify the piece fits in the grid
-      if(piece.getX() < 1 || piece.getY() < 1 || piece.getX() + piece.getWidth() > nbColumns + 1 || piece.getY() + piece.getHeight() > nbRows + 1)
+      if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() > nbColumns + 1 || p.getY() + p.getHeight() > nbRows + 1)
          return false;
-
       // verify the piece's position is free
-      for(int i = piece.getX(); i < piece.getX() + piece.getWidth(); i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
-            if(occupiedPositions[i-1][j-1] == true)
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            if(occupiedPositions[j-1][i-1] == true){
                return false;
+            }
          }
       }
-
       return true;
    }
 
-   public Boolean canSlide(Piece piece, int newXpos, int newYpos){
-      if(piece.getX() != newXpos && piece.getY() != newYpos)
+   public Boolean canSlide(Piece p, int newXpos, int newYpos){
+      if(p.getX() != newXpos && p.getY() != newYpos)
          return false;
 
-      if(piece.getX() != newXpos)
-         return canSlideHorizontaly(piece, newXpos);
+      if(p.getX() != newXpos)
+         return canSlideHorizontaly(p, newXpos);
 
-      return canSlideVerticaly(piece, newYpos);
+      return canSlideVerticaly(p, newYpos);
    }
 
-   public Boolean canSlide(Piece piece, Coordinates newPos){
-      return canSlide(piece, newPos.getX(), newPos.getY());
+   public Boolean canSlide(Piece p, Coordinates newPos){
+      return canSlide(p, newPos.getX(), newPos.getY());
    }
 
-   private Boolean canSlideHorizontaly(Piece piece, int newXpos){
-      if(newXpos < piece.getX())
-         return canSlideLeft(piece, piece.getX() - newXpos);
+   private Boolean canSlideHorizontaly(Piece p, int newXpos){
+      if(newXpos < p.getX())
+         return canSlideLeft(p, p.getX() - newXpos);
 
-      return canSlideRight(piece, newXpos - piece.getX());
+      return canSlideRight(p, newXpos - p.getX());
    }
 
-   private Boolean canSlideLeft(Piece piece, int moveLength){
+   private Boolean canSlideLeft(Piece p, int moveLength){
 
-      if(piece.getX() - moveLength < 0)
+      if(p.getX() - moveLength < 0)
          return false;
 
-      for(int i = piece.getX() - moveLength; i < piece.getX(); i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
+      for(int i = p.getX() - moveLength; i < p.getX(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
             if(occupiedPositions[j-1][i-1] == true)
                return false;
          }
@@ -81,13 +81,13 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideRight(Piece piece, int moveLength){
+   private Boolean canSlideRight(Piece p, int moveLength){
 
-      if(piece.getX() + moveLength > nbColumns)
+      if(p.getX() + moveLength > nbColumns)
          return false;
 
-      for(int i = piece.getX() + piece.getWidth(); i < piece.getX() + piece.getWidth() + moveLength; i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
+      for(int i = p.getX() + p.getWidth(); i < p.getX() + p.getWidth() + moveLength; i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
             if(occupiedPositions[j-1][i-1] == true)
                return false;
          }
@@ -96,20 +96,20 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideVerticaly(Piece piece, int newYpos){
-      if(newYpos < piece.getY())
-         return canSlideUp(piece, piece.getY() - newYpos);
+   private Boolean canSlideVerticaly(Piece p, int newYpos){
+      if(newYpos < p.getY())
+         return canSlideUp(p, p.getY() - newYpos);
 
-      return canSlideDown(piece, newYpos - piece.getY());
+      return canSlideDown(p, newYpos - p.getY());
    }
 
-   private Boolean canSlideUp(Piece piece, int moveLength){
+   private Boolean canSlideUp(Piece p, int moveLength){
 
-      if(piece.getY() - moveLength < 1)
+      if(p.getY() - moveLength < 1)
          return false;
 
-      for(int i = piece.getY() - moveLength; i < piece.getY(); i++){
-         for(int j = piece.getX(); j < piece.getX() + piece.getWidth(); j++){
+      for(int i = p.getY() - moveLength; i < p.getY(); i++){
+         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++){
             if(occupiedPositions[i-1][j-1] == true)
                return false;
          }
@@ -118,14 +118,14 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideDown(Piece piece, int moveLength){
+   private Boolean canSlideDown(Piece p, int moveLength){
 
-      if(piece.getY() + moveLength > nbRows)
+      if(p.getY() + moveLength > nbRows)
          return false;
 
 
-      for(int i = piece.getY() + piece.getHeight(); i < piece.getY() + piece.getHeight() + moveLength; i++){
-         for(int j = piece.getX(); j < piece.getX() + piece.getWidth(); j++){
+      for(int i = p.getY() + p.getHeight(); i < p.getY() + p.getHeight() + moveLength; i++){
+         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++){
             if(occupiedPositions[i-1][j-1] == true)
                return false;
          }
@@ -134,23 +134,23 @@ public class Grid{
       return true;
    }
 
-   public Boolean movePiece(Piece piece, int newXpos, int newYpos) throws InvalidPieceException{
-      if(!pieces.contains(piece))
+   public Boolean movePiece(Piece p, int newXpos, int newYpos) throws InvalidPieceException{
+      if(!pieces.contains(p))
          throw new InvalidPieceException();
 
-      if(!canSlide(piece, newXpos, newYpos))
+      if(!canSlide(p, newXpos, newYpos))
          return false;
 
-      for(int i = piece.getX(); i < piece.getX() + piece.getWidth(); i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
             occupiedPositions[j-1][i-1] = false;
          }
       }
 
-      piece.setPosition(newXpos, newYpos);
+      p.setPosition(newXpos, newYpos);
 
-      for(int i = piece.getX(); i < piece.getX() + piece.getWidth(); i++){
-         for(int j = piece.getY(); j < piece.getY() + piece.getHeight(); j++){
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
             occupiedPositions[j-1][i-1] = true;
          }
       }
@@ -158,8 +158,8 @@ public class Grid{
       return true;
    }
 
-   public Boolean movePiece(Piece piece, Coordinates newPos) throws InvalidPieceException{
-      return movePiece(piece, newPos.getX(), newPos.getY());
+   public Boolean movePiece(Piece p, Coordinates newPos) throws InvalidPieceException{
+      return movePiece(p, newPos.getX(), newPos.getY());
    }
 
    public void printGrid(){
@@ -173,5 +173,34 @@ public class Grid{
          }
          System.out.println();
       }
+   }
+
+   public Piece identify(int xpos, int ypos){
+      for(Piece p : pieces)
+         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
+            return p;
+
+      return null;
+   }
+
+   public Piece identify(Coordinates c){
+      return identify(c.getX(), c.getY());
+   }
+
+   public Piece getPiece(int ID){
+      for(Piece p : pieces)
+         if(p.getID() == ID)
+            return p;
+
+      return null;
+   }
+
+   public void removePiece(Piece p){
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            occupiedPositions[j-1][i-1] = false;
+         }
+      }
+      pieces.remove(p);
    }
 }
