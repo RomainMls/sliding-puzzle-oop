@@ -1,11 +1,11 @@
 public class Piece{
-   private final int height;
+   private final int heigth;
    private final int width;
    private Coordinates position;
    private final int ID;
 
    public Piece(int height, int width, Coordinates position, int ID){
-      this.height = height;
+      this.heigth = height;
       this.width = width;
       this.position = position;
       this.ID = ID;
@@ -15,8 +15,8 @@ public class Piece{
       this(height, width, new Coordinates(xpos, ypos), ID);
    }
 
-   public int getHeight(){
-      return height;
+   public int getHeigth(){
+      return heigth;
    }
 
    public int getWidth(){

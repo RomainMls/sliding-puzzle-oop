@@ -23,7 +23,7 @@ public class Grid{
          throw new InvalidPieceException();
 
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             occupiedPositions[j-1][i-1] = true;
          }
       }
@@ -32,11 +32,11 @@ public class Grid{
    private Boolean verifyPosition(Piece p){
 
       // verify the piece fits in the grid
-      if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() > nbColumns + 1 || p.getY() + p.getHeight() > nbRows + 1)
+      if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() > nbColumns + 1 || p.getY() + p.getHeigth() > nbRows + 1)
          return false;
       // verify the piece's position is free
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             if(occupiedPositions[j-1][i-1] == true){
                return false;
             }
@@ -72,7 +72,7 @@ public class Grid{
          return false;
 
       for(int i = p.getX() - moveLength; i < p.getX(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             if(occupiedPositions[j-1][i-1] == true)
                return false;
          }
@@ -87,7 +87,7 @@ public class Grid{
          return false;
 
       for(int i = p.getX() + p.getWidth(); i < p.getX() + p.getWidth() + moveLength; i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             if(occupiedPositions[j-1][i-1] == true)
                return false;
          }
@@ -124,7 +124,7 @@ public class Grid{
          return false;
 
 
-      for(int i = p.getY() + p.getHeight(); i < p.getY() + p.getHeight() + moveLength; i++){
+      for(int i = p.getY() + p.getHeigth(); i < p.getY() + p.getHeigth() + moveLength; i++){
          for(int j = p.getX(); j < p.getX() + p.getWidth(); j++){
             if(occupiedPositions[i-1][j-1] == true)
                return false;
@@ -142,7 +142,7 @@ public class Grid{
          return false;
 
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             occupiedPositions[j-1][i-1] = false;
          }
       }
@@ -150,7 +150,7 @@ public class Grid{
       p.setPosition(newXpos, newYpos);
 
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             occupiedPositions[j-1][i-1] = true;
          }
       }
@@ -177,7 +177,7 @@ public class Grid{
 
    public Piece identify(int xpos, int ypos){
       for(Piece p : pieces)
-         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
+         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeigth())
             return p;
 
       return null;
@@ -197,7 +197,7 @@ public class Grid{
 
    public void removePiece(Piece p){
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+         for(int j = p.getY(); j < p.getY() + p.getHeigth(); j++){
             occupiedPositions[j-1][i-1] = false;
          }
       }

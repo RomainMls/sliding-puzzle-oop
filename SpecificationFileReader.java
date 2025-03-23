@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,45 +11,51 @@ public class SpecificationFileReader{
       this.filename = filename;
    }
 
-   public Grid readGrid() throws FileNotFoundException, IOException, WronglyFormatedFileException{
-      BufferedReader br;
-      br = new BufferedReader(new FileReader(filename));
+   public Grid readGrid() throws FileNotFoundException, IOException, WronglyFormattedFileException{
+      BufferedReader br = new BufferedReader(new FileReader(filename));
 
-      Scanner s = new Scanner(br.readLine());
+      String line = br.readLine();
+      Scanner s = new Scanner(line);
 
       int nbRows, nbColumns, nbPieces;
       nbColumns = s.nextInt();
       nbRows = s.nextInt();
       nbPieces = s.nextInt();
+      s.close();
 
       Grid g = new Grid(nbRows, nbColumns);
 
       for(int i = 0; i < nbPieces; i++){
-         s = new Scanner(br.readLine());
-         int width, heigth, xpos, ypos;
+         line = br.readLine();
+         s = new Scanner(line);
 
+         int width, heigth, xpos, ypos;
          width = s.nextInt();
          heigth = s.nextInt();
          xpos = s.nextInt();
          ypos = s.nextInt();
+         s.close();
 
          Piece p = new Piece(heigth, width, xpos, ypos, i+1);
-         try{g.addPiece(p);}
-         catch(InvalidPieceException e){
+         try{
+            g.addPiece(p);
+         } catch(InvalidPieceException e){
             br.close();
-            s.close();
-            throw new WronglyFormatedFileException("Error at line" + i+1 + " describes an invalid piece");
+            throw new WronglyFormattedFileException("Error at line " + (i + 2) + " describes an invalid piece");
          }
       }
-      int nbGoalPieces = (new Scanner(br.readLine())).nextInt();
+
+      s = new Scanner(br.readLine());
+      int nbGoalPieces = s.nextInt();
 
       for(int i = 0; i < nbGoalPieces; i++){
          s = new Scanner(br.readLine());
-         int ID, xpos, ypos;
 
+         int ID, xpos, ypos;
          ID = s.nextInt();
          xpos = s.nextInt();
          ypos = s.nextInt();
+         s.close();
 
          Piece OGp = g.getPiece(ID);
          PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
@@ -58,14 +63,11 @@ public class SpecificationFileReader{
          try{g.addPiece(pg);}
          catch(InvalidPieceException e){
             br.close();
-            s.close();
-            throw new WronglyFormatedFileException("");
+            throw new WronglyFormattedFileException("Error at line " + (i + nbPieces + 3) + " describes an invalid piece");
          }
       }
 
       br.close();
-      s.close();
-
       return g;
    }
 }
