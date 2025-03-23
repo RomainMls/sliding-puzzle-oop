@@ -203,4 +203,14 @@ public class Grid{
       }
       pieces.remove(p);
    }
+
+   public Boolean goalReached(){
+      for(Piece p : pieces){
+         if (p instanceof PieceGoal) {
+            if(!((PieceGoal) p).isAtGoalPosition())
+               return false;
+         }
+      }
+      return true;
+   }
 }

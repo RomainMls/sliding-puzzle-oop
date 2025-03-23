@@ -1,7 +1,7 @@
 public class Test{
 
    public static void main(String[] args){
-      SpecificationFileReader sfr = new SpecificationFileReader("klotski.spzl");
+      SpecificationFileReader sfr = new SpecificationFileReader("klotskipasbien.spzl");
       Grid g;
       try {
           g = sfr.readGrid();
@@ -11,6 +11,11 @@ public class Test{
       }
 
       g.printGrid();
+
+      if(g.goalReached())
+         System.out.println("YES");
+      else
+         System.out.println("NON");
    }
 
 }
