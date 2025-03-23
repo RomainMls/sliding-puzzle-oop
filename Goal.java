@@ -16,4 +16,8 @@ public class Goal {
     }
     return true;
   }
+
+  public Boolean areAllPiecesRecorded(){
+    return nbPiecesGoal == piecesGoal.size();
+  }
 }
