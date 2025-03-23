@@ -58,7 +58,7 @@ public class SpecificationFileReader{
          s.close();
 
          Piece OGp = g.getPiece(ID);
-         PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
+         PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeigth(), OGp.getPosition(), ID, xpos, ypos);
          g.removePiece(OGp);
          try{g.addPiece(pg);}
          catch(InvalidPieceException e){

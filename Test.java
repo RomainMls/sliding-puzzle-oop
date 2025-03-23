@@ -1,7 +1,7 @@
 public class Test{
 
    public static void main(String[] args){
-      SpecificationFileReader sfr = new SpecificationFileReader("klotskipasbien.spzl");
+      SpecificationFileReader sfr = new SpecificationFileReader("klotski.spzl");
       Grid g;
       try {
           g = sfr.readGrid();

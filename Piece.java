@@ -4,8 +4,8 @@ public class Piece{
    private Coordinates position;
    private final int ID;
 
-   public Piece(int height, int width, Coordinates position, int ID){
-      this.heigth = height;
+   public Piece(int heigth, int width, Coordinates position, int ID){
+      this.heigth = heigth;
       this.width = width;
       this.position = position;
       this.ID = ID;
