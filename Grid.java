@@ -53,27 +53,6 @@ public class Grid{
       return true;
    }
 
-   private boolean canSlide(Piece p, int newXpos, int newYpos){
-      if(p.getX() != newXpos && p.getY() != newYpos)
-         return false;
-
-      if(p.getX() != newXpos)
-         return canSlideHorizontaly(p, newXpos);
-
-      return canSlideVerticaly(p, newYpos);
-   }
-
-   private boolean canSlide(Piece p, Coordinates newPos){
-      return canSlide(p, newPos.getX(), newPos.getY());
-   }
-
-   private boolean canSlideHorizontaly(Piece p, int newXpos){
-      if(newXpos < p.getX())
-         return canSlideLeft(p, p.getX() - newXpos);
-
-      return canSlideRight(p, newXpos - p.getX());
-   }
-
    private boolean canSlideLeft(Piece p, int moveLength){
       if(p.getX() - moveLength < 1)
          return false;
@@ -100,13 +79,6 @@ public class Grid{
       }
 
       return true;
-   }
-
-   private boolean canSlideVerticaly(Piece p, int newYpos){
-      if(newYpos < p.getY())
-         return canSlideUp(p, p.getY() - newYpos);
-
-      return canSlideDown(p, newYpos - p.getY());
    }
 
    private boolean canSlideUp(Piece p, int moveLength){
@@ -137,32 +109,6 @@ public class Grid{
       }
 
       return true;
-   }
-
-   public boolean movePiece(Piece p, int newXpos, int newYpos) throws InvalidPieceException{
-      if(!pieces.contains(p))
-         throw new InvalidPieceException();
-
-      if(!canSlide(p, newXpos, newYpos))
-         return false;
-
-      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
-            occupiedPositions[j-1][i-1] = false;
-         }
-      }
-      p.setPosition(newXpos, newYpos);
-
-      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
-            occupiedPositions[j-1][i-1] = true;
-         }
-      }
-      return true;
-   }
-
-   public boolean movePiece(Piece p, Coordinates newPos) throws InvalidPieceException{
-      return movePiece(p, newPos.getX(), newPos.getY());
    }
 
    public boolean slideUp(Piece p, int d) throws InvalidPieceException{

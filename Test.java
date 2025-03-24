@@ -9,7 +9,7 @@ public class Test{
          GraphicalInterface gI = null;
          try {
             try {
-               gI = new GraphicalInterface(400, 500, "15-puzzle.spzl");
+               gI = new GraphicalInterface(400, 500, "klotski.spzl");
             } catch (DimensionsException e) {
 
             } catch (GUIException e) {
