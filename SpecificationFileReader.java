@@ -29,14 +29,14 @@ public class SpecificationFileReader{
          line = br.readLine();
          s = new Scanner(line);
 
-         int width, heigth, xpos, ypos;
+         int width, height, xpos, ypos;
          width = s.nextInt();
-         heigth = s.nextInt();
+         height = s.nextInt();
          xpos = s.nextInt();
          ypos = s.nextInt();
          s.close();
 
-         Piece p = new Piece(heigth, width, xpos, ypos, i+1);
+         Piece p = new Piece(height, width, xpos, ypos, i+1);
          try{
             g.addPiece(p);
          } catch(InvalidPieceException e){
@@ -58,7 +58,7 @@ public class SpecificationFileReader{
          s.close();
 
          Piece OGp = g.getPiece(ID);
-         PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeigth(), OGp.getPosition(), ID, xpos, ypos);
+         PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
          g.removePiece(OGp);
          try{g.addPiece(pg);}
          catch(InvalidPieceException e){
