@@ -14,5 +14,8 @@ public class PieceGoal extends Piece{
     return this.getX() == goalPosition.getX() && this.getY() == goalPosition.getY();
   }
 
-
+  public Coordinates getGoalPosition(){
+    return goalPosition;
+  }
+  
 }
