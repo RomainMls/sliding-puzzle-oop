@@ -4,17 +4,13 @@ public class Grid{
    private final int nbRows;
    private final int nbColumns;
    private Vector<Piece> pieces;
-   private Boolean[][] occupiedPositions;
+   private boolean[][] occupiedPositions;
 
    public Grid(int nbRows, int nbColumns){
       this.nbRows = nbRows;
       this.nbColumns = nbColumns;
       pieces = new Vector<>();
-      occupiedPositions = new Boolean[nbRows][nbColumns];
-      for(int i = 0; i < nbRows; i++){
-         for(int j = 0; j < nbColumns; j++)
-            occupiedPositions[i][j] = false;
-      }
+      occupiedPositions = new boolean[nbRows][nbColumns];
    }
 
    public void addPiece(Piece p) throws InvalidPieceException{
