@@ -27,7 +27,11 @@ public class Coordinates{
       return c1.xpos == c2.xpos && c1.ypos == c2.ypos;
    }
 
-   public Boolean equals(Coordinates c2){
+   public boolean equals(Coordinates c2){
       return this.xpos == c2.xpos && this.ypos == c2.ypos;
+   }
+
+   public static Coordinates toVector(Coordinates c1, Coordinates c2){
+      return new Coordinates(c2.xpos - c1.xpos, c2.ypos - c1.ypos);
    }
 }

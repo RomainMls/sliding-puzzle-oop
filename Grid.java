@@ -49,7 +49,7 @@ public class Grid{
       return true;
    }
 
-   public boolean canSlide(Piece p, int newXpos, int newYpos){
+   private boolean canSlide(Piece p, int newXpos, int newYpos){
       if(p.getX() != newXpos && p.getY() != newYpos)
          return false;
 
@@ -59,7 +59,7 @@ public class Grid{
       return canSlideVerticaly(p, newYpos);
    }
 
-   public boolean canSlide(Piece p, Coordinates newPos){
+   private boolean canSlide(Piece p, Coordinates newPos){
       return canSlide(p, newPos.getX(), newPos.getY());
    }
 
@@ -140,6 +140,7 @@ public class Grid{
    public boolean movePiece(Piece p, int newXpos, int newYpos) throws InvalidPieceException{
       if(!pieces.contains(p))
          throw new InvalidPieceException();
+
       if(!canSlide(p, newXpos, newYpos))
          return false;
 
@@ -162,7 +163,10 @@ public class Grid{
       return movePiece(p, newPos.getX(), newPos.getY());
    }
 
-   public boolean slidePieceUp(Piece p, int d){
+   public boolean slideUp(Piece p, int d) throws InvalidPieceException{
+      if(!pieces.contains(p))
+         throw new InvalidPieceException();
+
       for(int k = d; k > 0; k--){
          if(this.canSlideUp(p, k)){
             for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
@@ -184,7 +188,10 @@ public class Grid{
       return false;
    }
 
-   public boolean slidePieceDown(Piece p, int d){
+   public boolean slideDown(Piece p, int d) throws InvalidPieceException{
+      if(!pieces.contains(p))
+         throw new InvalidPieceException();
+
       for(int k = d; k > 0; k--){
          if(this.canSlideDown(p, k)){
             for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
@@ -206,7 +213,10 @@ public class Grid{
       return false;
    }
 
-   public boolean slidePieceLeft(Piece p, int d){
+   public boolean slideLeft(Piece p, int d) throws InvalidPieceException{
+      if(!pieces.contains(p))
+         throw new InvalidPieceException();
+
       for(int k = d; k > 0; k--){
          if(this.canSlideLeft(p, k)){
             for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
@@ -228,7 +238,9 @@ public class Grid{
       return false;
    }
 
-   public boolean slidePieceRight(Piece p, int d){
+   public boolean slideRight(Piece p, int d) throws InvalidPieceException{
+      if(!pieces.contains(p))
+         throw new InvalidPieceException();
       for(int k = d; k > 0; k--){
          if(this.canSlideRight(p, k)){
             for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
@@ -248,6 +260,22 @@ public class Grid{
       }
 
       return false;
+   }
+
+   public boolean slidePiece(Piece p, Coordinates v) throws InvalidPieceException{
+      if(v.getY() != 0 && v.getX() != 0)
+         return false;
+
+      if(v.getY() > 0)
+         return slideDown(p, v.getY());
+
+      if(v.getY() < 0)
+         return slideUp(p, -v.getY());
+
+      if(v.getX() > 0)
+         return slideRight(p, v.getX());
+
+      return slideLeft(p, -v.getX());
    }
 
    public void printGrid(){
