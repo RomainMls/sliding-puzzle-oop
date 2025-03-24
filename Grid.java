@@ -33,7 +33,7 @@ public class Grid{
       }
    }
 
-   private Boolean verifyPosition(Piece p){
+   private boolean verifyPosition(Piece p){
 
       // verify the piece fits in the grid
       if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() > nbColumns + 1 || p.getY() + p.getHeight() > nbRows + 1)
@@ -49,7 +49,7 @@ public class Grid{
       return true;
    }
 
-   public Boolean canSlide(Piece p, int newXpos, int newYpos){
+   public boolean canSlide(Piece p, int newXpos, int newYpos){
       if(p.getX() != newXpos && p.getY() != newYpos)
          return false;
 
@@ -59,18 +59,18 @@ public class Grid{
       return canSlideVerticaly(p, newYpos);
    }
 
-   public Boolean canSlide(Piece p, Coordinates newPos){
+   public boolean canSlide(Piece p, Coordinates newPos){
       return canSlide(p, newPos.getX(), newPos.getY());
    }
 
-   private Boolean canSlideHorizontaly(Piece p, int newXpos){
+   private boolean canSlideHorizontaly(Piece p, int newXpos){
       if(newXpos < p.getX())
          return canSlideLeft(p, p.getX() - newXpos);
 
       return canSlideRight(p, newXpos - p.getX());
    }
 
-   private Boolean canSlideLeft(Piece p, int moveLength){
+   private boolean canSlideLeft(Piece p, int moveLength){
 
       if(p.getX() - moveLength < 0)
          return false;
@@ -85,7 +85,7 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideRight(Piece p, int moveLength){
+   private boolean canSlideRight(Piece p, int moveLength){
 
       if(p.getX() + + p.getWidth() - 1 + moveLength > nbColumns)
          return false;
@@ -100,14 +100,14 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideVerticaly(Piece p, int newYpos){
+   private boolean canSlideVerticaly(Piece p, int newYpos){
       if(newYpos < p.getY())
          return canSlideUp(p, p.getY() - newYpos);
 
       return canSlideDown(p, newYpos - p.getY());
    }
 
-   private Boolean canSlideUp(Piece p, int moveLength){
+   private boolean canSlideUp(Piece p, int moveLength){
 
       if(p.getY() - moveLength < 1)
          return false;
@@ -122,7 +122,7 @@ public class Grid{
       return true;
    }
 
-   private Boolean canSlideDown(Piece p, int moveLength){
+   private boolean canSlideDown(Piece p, int moveLength){
 
       if(p.getY() + p.getHeight() - 1 + moveLength> nbRows)
          return false;
@@ -137,7 +137,7 @@ public class Grid{
       return true;
    }
 
-   public Boolean movePiece(Piece p, int newXpos, int newYpos) throws InvalidPieceException{
+   public boolean movePiece(Piece p, int newXpos, int newYpos) throws InvalidPieceException{
       if(!pieces.contains(p))
          throw new InvalidPieceException();
       if(!canSlide(p, newXpos, newYpos))
@@ -158,8 +158,96 @@ public class Grid{
       return true;
    }
 
-   public Boolean movePiece(Piece p, Coordinates newPos) throws InvalidPieceException{
+   public boolean movePiece(Piece p, Coordinates newPos) throws InvalidPieceException{
       return movePiece(p, newPos.getX(), newPos.getY());
+   }
+
+   public boolean slidePieceUp(Piece p, int d){
+      for(int k = d; k > 0; k--){
+         if(this.canSlideUp(p, k)){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = false;
+               }
+            }
+            p.setPosition(p.getX(), p.getY() - k);
+
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = true;
+               }
+            }
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   public boolean slidePieceDown(Piece p, int d){
+      for(int k = d; k > 0; k--){
+         if(this.canSlideDown(p, k)){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = false;
+               }
+            }
+            p.setPosition(p.getX(), p.getY() + k);
+
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = true;
+               }
+            }
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   public boolean slidePieceLeft(Piece p, int d){
+      for(int k = d; k > 0; k--){
+         if(this.canSlideLeft(p, k)){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = false;
+               }
+            }
+            p.setPosition(p.getX() - k, p.getY());
+
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = true;
+               }
+            }
+            return true;
+         }
+      }
+
+      return false;
+   }
+
+   public boolean slidePieceRight(Piece p, int d){
+      for(int k = d; k > 0; k--){
+         if(this.canSlideRight(p, k)){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = false;
+               }
+            }
+            p.setPosition(p.getX() + k, p.getY());
+
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+                  occupiedPositions[j-1][i-1] = true;
+               }
+            }
+            return true;
+         }
+      }
+
+      return false;
    }
 
    public void printGrid(){
@@ -204,7 +292,7 @@ public class Grid{
       pieces.remove(p);
    }
 
-   public Boolean goalReached(){
+   public boolean goalReached(){
       for(Piece p : pieces){
          if (p instanceof PieceGoal) {
             if(!((PieceGoal) p).isAtGoalPosition())

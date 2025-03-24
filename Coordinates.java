@@ -23,7 +23,7 @@ public class Coordinates{
       this.ypos = ypos;
    }
 
-   public static Boolean areEqual(Coordinates c1, Coordinates c2){
+   public static boolean areEqual(Coordinates c1, Coordinates c2){
       return c1.xpos == c2.xpos && c1.ypos == c2.ypos;
    }
 

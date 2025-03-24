@@ -10,7 +10,7 @@ public class PieceGoal extends Piece{
     this(width, heigth, position, ID, new Coordinates(goalPositionX, goalPositionY));
   }
 
-  public Boolean isAtGoalPosition(){
+  public boolean isAtGoalPosition(){
     return this.getX() == goalPosition.getX() && this.getY() == goalPosition.getY();
   }
 
