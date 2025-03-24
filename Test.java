@@ -6,7 +6,7 @@ import be.uliege.montefiore.oop.GUIException;
 public class Test{
 
    public static void main(String[] args){
-      SpecificationFileReader sfr = new SpecificationFileReader("klotski.spzl");
+      SpecificationFileReader sfr = new SpecificationFileReader("15-puzzle.spzl");
       Grid g;
       try {
           g = sfr.readGrid();
@@ -26,7 +26,7 @@ public class Test{
          GraphicalInterface gI = null;
          try {
             try {
-               gI = new GraphicalInterface(400, 500, "klotski.spzl");
+               gI = new GraphicalInterface(400, 500, "15-puzzle.spzl");
             } catch (DimensionsException e) {
 
             } catch (GUIException e) {
@@ -48,7 +48,7 @@ public class Test{
                if(!finished || (finished && gI.checkIfWin())){
                   gI.display();
                }
-      
+
             }
             gI.endGame();
          } catch (GUIException e) {

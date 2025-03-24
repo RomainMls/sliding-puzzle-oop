@@ -22,6 +22,9 @@ public class Grid{
    }
 
    public void addPiece(Piece p) throws InvalidPieceException{
+      if(pieces.contains(p))
+         return;
+
       pieces.add(p);
       if(!verifyPosition(p))
          throw new InvalidPieceException();
@@ -36,8 +39,9 @@ public class Grid{
    private boolean verifyPosition(Piece p){
 
       // verify the piece fits in the grid
-      if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() > nbColumns + 1 || p.getY() + p.getHeight() > nbRows + 1)
+      if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() - 1 > nbColumns || p.getY() + p.getHeight() - 1> nbRows)
          return false;
+
       // verify the piece's position is free
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
          for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
@@ -71,8 +75,9 @@ public class Grid{
    }
 
    private boolean canSlideLeft(Piece p, int moveLength){
-
-      if(p.getX() - moveLength < 0)
+      System.out.println("can it slideleft" + moveLength + "?");
+      System.out.println("original x = " + p.getX());
+      if(p.getX() - moveLength < 1)
          return false;
 
       for(int i = p.getX() - moveLength; i < p.getX(); i++){
@@ -81,7 +86,7 @@ public class Grid{
                return false;
          }
       }
-
+      System.out.println("yes it can");
       return true;
    }
 
@@ -216,9 +221,11 @@ public class Grid{
    public boolean slideLeft(Piece p, int d) throws InvalidPieceException{
       if(!pieces.contains(p))
          throw new InvalidPieceException();
-
+      System.out.println("slideLeft() with d = " + d);
       for(int k = d; k > 0; k--){
+         System.out.println("testing for k = " + k);
          if(this.canSlideLeft(p, k)){
+            System.out.println("works for k = " + k);
             for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
                for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
                   occupiedPositions[j-1][i-1] = false;
@@ -233,6 +240,7 @@ public class Grid{
             }
             return true;
          }
+         System.out.println("cannot slide for k = " + k);
       }
 
       return false;

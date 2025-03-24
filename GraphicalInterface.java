@@ -61,6 +61,7 @@ public class GraphicalInterface {
       return false;
 
     Coordinates v = Coordinates.toVector(c1, c2);
+    System.out.println("v: " + v.getX() + "," + v.getY());
     try {
       grid.slidePiece(p, v);
       grid.printGrid();
