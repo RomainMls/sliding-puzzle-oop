@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 public class InvalidPieceException extends Exception
 {
    public InvalidPieceException(){

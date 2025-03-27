@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 public class PieceGoal extends Piece{
   private final Coordinates goalPosition;
 

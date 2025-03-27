@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 import java.util.Vector;
 
 public class Grid{

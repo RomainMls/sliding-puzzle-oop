@@ -1,15 +1,19 @@
+package be.uliege.montefiore.oop;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import be.uliege.montefiore.oop.GUIException;
+import be.uliege.montefiore.oop.reader.WronglyFormattedFileException;
+import be.uliege.montefiore.oop.GUI.*;
 
-public class Test{
+public class Main{
 
    public static void main(String[] args){
          GraphicalInterface gI = null;
          try {
             try {
-               gI = new GraphicalInterface(400, 500, "15-puzzle.spzl");
+               gI = new GraphicalInterface(400, 500, "klotski.spzl");
             } catch (DimensionsException e) {
 
             } catch (GUIException e) {

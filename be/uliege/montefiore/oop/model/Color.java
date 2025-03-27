@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 public class Color {
   private int r;
   private int g;

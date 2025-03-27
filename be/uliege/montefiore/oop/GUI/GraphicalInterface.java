@@ -1,8 +1,17 @@
+package be.uliege.montefiore.oop.GUI;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;
+import be.uliege.montefiore.oop.model.Color;
+import be.uliege.montefiore.oop.model.Coordinates;
+import be.uliege.montefiore.oop.model.Grid;
+import be.uliege.montefiore.oop.model.InvalidPieceException;
+import be.uliege.montefiore.oop.model.Piece;
+import be.uliege.montefiore.oop.reader.SpecificationFileReader;
+import be.uliege.montefiore.oop.reader.WronglyFormattedFileException;
 
 public class GraphicalInterface {
   private SlidingPuzzleGUI sp;

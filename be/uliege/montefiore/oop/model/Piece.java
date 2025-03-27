@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 public class Piece{
    private final int height;
    private final int width;

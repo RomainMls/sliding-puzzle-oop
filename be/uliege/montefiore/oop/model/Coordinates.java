@@ -1,3 +1,5 @@
+package be.uliege.montefiore.oop.model;
+
 public class Coordinates{
    private int xpos;
    private int ypos;
