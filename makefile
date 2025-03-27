@@ -9,8 +9,9 @@ all: compile
 compile:
 	javac -cp $(CP) $(SRC_DIR)/*.java
 
+# use ' make run ARGS="filename" '
 run: compile
-	java -cp $(CP) $(MAIN_CLASS) $(ARGS) # use ' make run ARGS="filename" '
+	java -cp $(CP) $(MAIN_CLASS) $(ARGS)
 
 clean:
 	find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
