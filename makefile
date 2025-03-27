@@ -9,7 +9,6 @@ all: compile
 compile:
 	@javac -cp $(CP) $(SRC_DIR)/*.java
 
-# Run the main class
 run: compile
 	@java -cp $(CP) $(MAIN_CLASS)
 
