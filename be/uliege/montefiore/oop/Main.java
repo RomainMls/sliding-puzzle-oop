@@ -13,7 +13,7 @@ public class Main{
          GraphicalInterface gI = null;
          try {
             try {
-               gI = new GraphicalInterface(400, 500, "klotski.spzl");
+               gI = new GraphicalInterface(400, 500, args[0]);
             } catch (DimensionsException e) {
 
             } catch (GUIException e) {

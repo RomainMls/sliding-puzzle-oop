@@ -7,10 +7,10 @@ CP := .:$(JAR_FILE)
 all: compile
 
 compile:
-	@javac -cp $(CP) $(SRC_DIR)/*.java
+	javac -cp $(CP) $(SRC_DIR)/*.java
 
 run: compile
-	@java -cp $(CP) $(MAIN_CLASS)
+	java -cp $(CP) $(MAIN_CLASS) $(ARGS)
 
 clean:
-	@find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
+	find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
