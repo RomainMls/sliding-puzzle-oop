@@ -1,10 +1,17 @@
+SRC_DIR := be/uliege/montefiore/oop
+JAR_FILE := sliding-puzzle-gui.jar
+MAIN_CLASS := be.uliege.montefiore.oop.Main
+
+CP := .:$(JAR_FILE)
+
 all: compile
 
 compile:
-	javac -cp .:sliding-puzzle-gui.jar be/uliege/montefiore/oop/*.java
+	@javac -cp $(CP) $(SRC_DIR)/*.java
 
-run: 
-	java -cp .:sliding-puzzle-gui.jar be.uliege.montefiore.oop.Main
+# Run the main class
+run: compile
+	@java -cp $(CP) $(MAIN_CLASS)
 
 clean:
-	rm -f be.uliege.montefiore.oop/**/*.class
+	@find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
