@@ -1,6 +1,6 @@
-package be.uliege.montefiore.oop.model;
+package be.uliege.montefiore.oop.GUI;
 
-public class Color {
+public class Color{
   private int r;
   private int g;
   private int b;

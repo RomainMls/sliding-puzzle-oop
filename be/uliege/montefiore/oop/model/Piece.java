@@ -1,5 +1,7 @@
 package be.uliege.montefiore.oop.model;
 
+import be.uliege.montefiore.oop.GUI.Color;
+
 public class Piece{
    private final int height;
    private final int width;
@@ -12,7 +14,7 @@ public class Piece{
       this.width = width;
       this.position = position;
       this.ID = ID;
-      this.color = generatePieceColor();
+      this.color = generateColor();
    }
 
    public Piece(int height, int width, int xpos, int ypos, int ID){
@@ -25,6 +27,10 @@ public class Piece{
 
    public int getWidth(){
       return width;
+   }
+
+   public Color getColor(){
+      return color;
    }
 
    public Coordinates getPosition(){
@@ -43,22 +49,18 @@ public class Piece{
       return ID;
    }
 
-   public void setPosition(Coordinates position){
-      this.position = position;
-   }
-
    public void setPosition(int xpos, int ypos){
       this.position = new Coordinates(xpos, ypos);
    }
 
-   private Color generatePieceColor(){
+   public void setPosition(Coordinates position){
+      this.position = position;
+   }
+
+   private Color generateColor(){
       int r = (ID * 123) % 256;
       int g = (ID * 321) % 256;
       int b = (ID * 231) % 256;
       return new Color(r, g, b);
-   }
-
-   public Color getColor(){
-      return color;
    }
 }

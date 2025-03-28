@@ -2,135 +2,185 @@ package be.uliege.montefiore.oop.model;
 
 import java.util.Vector;
 
-public class Grid{
+public class Grid
+{
    private final int nbRows;
    private final int nbColumns;
    private Vector<Piece> pieces;
    private boolean[][] occupiedPositions;
 
-   public Grid(int nbRows, int nbColumns){
+   public Grid(int nbRows, int nbColumns)
+   {
       this.nbRows = nbRows;
       this.nbColumns = nbColumns;
       pieces = new Vector<>();
       occupiedPositions = new boolean[nbRows][nbColumns];
    }
 
-   public int getRows(){
+   public int getRows()
+   {
       return nbRows;
    }
 
-   public int getColumns(){
+   public int getColumns()
+   {
       return nbColumns;
    }
 
-   public void addPiece(Piece p) throws InvalidPieceException{
+   public Piece identify(int xpos, int ypos)
+   {
+      for(Piece p : pieces)
+         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
+            return p;
+
+      return null;
+   }
+
+   public Piece identify(Coordinates c)
+   {
+      return identify(c.getX(), c.getY());
+   }
+
+   public Piece getPiece(int ID)
+   {
+      for(Piece p : pieces)
+         if(p.getID() == ID)
+            return p;
+
+      return null;
+   }
+
+   public void addPiece(Piece p) throws InvalidPieceException
+   {
       if(pieces.contains(p))
          return;
 
-      pieces.add(p);
       if(!verifyPosition(p))
          throw new InvalidPieceException();
 
-      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      pieces.add(p);
+
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
             occupiedPositions[j-1][i-1] = true;
-         }
-      }
    }
 
-   private boolean verifyPosition(Piece p){
+   public void removePiece(Piece p)
+   {
+      if(!pieces.contains(p))
+         return;
 
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
+            occupiedPositions[j-1][i-1] = false;
+
+      pieces.remove(p);
+   }
+
+   public boolean goalReached()
+   {
+      for(Piece p : pieces)
+         if (p instanceof PieceGoal)
+            if(!((PieceGoal) p).isAtGoalPosition())
+               return false;
+
+      return true;
+   }
+
+   private boolean verifyPosition(Piece p)
+   {
       // verify the piece fits in the grid
       if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() - 1 > nbColumns || p.getY() + p.getHeight() - 1> nbRows)
          return false;
 
       // verify the piece's position is free
-      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
-            if(occupiedPositions[j-1][i-1] == true){
-               return false;
-            }
-         }
-      }
-      return true;
-   }
-
-   private boolean canSlideLeft(Piece p, int moveLength){
-      if(p.getX() - moveLength < 1)
-         return false;
-
-      for(int i = p.getX() - moveLength; i < p.getX(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
             if(occupiedPositions[j-1][i-1] == true)
                return false;
-         }
-      }
+
       return true;
    }
 
-   private boolean canSlideRight(Piece p, int moveLength){
-
-      if(p.getX() + + p.getWidth() - 1 + moveLength > nbColumns)
+   private boolean canSlideLeft(Piece p, int d)
+   {
+      // verify end position
+      if(p.getX() - d < 1)
          return false;
 
-      for(int i = p.getX() + p.getWidth(); i < p.getX() + p.getWidth() + moveLength; i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      // for each position the piece will take during the sliding, verify collisions
+      for(int i = p.getX() - d; i < p.getX(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
             if(occupiedPositions[j-1][i-1] == true)
                return false;
-         }
-      }
 
       return true;
    }
 
-   private boolean canSlideUp(Piece p, int moveLength){
-
-      if(p.getY() - moveLength < 1)
+   private boolean canSlideRight(Piece p, int d)
+   {
+      // verify end position
+      if(p.getX() + + p.getWidth() - 1 + d > nbColumns)
          return false;
 
-      for(int i = p.getY() - moveLength; i < p.getY(); i++){
-         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++){
-            if(occupiedPositions[i-1][j-1] == true)
+      // for each position the piece will take during the sliding, verify collisions
+      for(int i = p.getX() + p.getWidth(); i < p.getX() + p.getWidth() + d; i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
+            if(occupiedPositions[j-1][i-1] == true)
                return false;
-         }
-      }
 
       return true;
    }
 
-   private boolean canSlideDown(Piece p, int moveLength){
-
-      if(p.getY() + p.getHeight() - 1 + moveLength> nbRows)
+   private boolean canSlideUp(Piece p, int d)
+   {
+      // verify end position
+      if(p.getY() - d < 1)
          return false;
 
-      for(int i = p.getY() + p.getHeight(); i < p.getY() + p.getHeight() + moveLength; i++){
-         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++){
+      // for each position the piece will take during the sliding, verify collisions
+      for(int i = p.getY() - d; i < p.getY(); i++)
+         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++)
             if(occupiedPositions[i-1][j-1] == true)
                return false;
-         }
-      }
 
       return true;
    }
 
-   public boolean slideUp(Piece p, int d) throws InvalidPieceException{
+   private boolean canSlideDown(Piece p, int d)
+   {
+      // verify end position
+      if(p.getY() + p.getHeight() - 1 + d> nbRows)
+         return false;
+
+      // for each position the piece will take during the sliding, verify collisions
+      for(int i = p.getY() + p.getHeight(); i < p.getY() + p.getHeight() + d; i++)
+         for(int j = p.getX(); j < p.getX() + p.getWidth(); j++)
+            if(occupiedPositions[i-1][j-1] == true)
+               return false;
+
+      return true;
+   }
+
+   public boolean slideUp(Piece p, int d) throws InvalidPieceException
+   {
       if(!pieces.contains(p))
-         throw new InvalidPieceException();
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
 
-      for(int k = d; k > 0; k--){
-         if(this.canSlideUp(p, k)){
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      for(int k = d; k > 0; k--)    // let's find the furthest up the piece can slide
+      {
+         if(this.canSlideUp(p, k))
+         {
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = false;
-               }
-            }
+
             p.setPosition(p.getX(), p.getY() - k);
 
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
-               }
-            }
+
             return true;
          }
       }
@@ -138,24 +188,25 @@ public class Grid{
       return false;
    }
 
-   public boolean slideDown(Piece p, int d) throws InvalidPieceException{
+   public boolean slideDown(Piece p, int d) throws InvalidPieceException
+   {
       if(!pieces.contains(p))
-         throw new InvalidPieceException();
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
 
-      for(int k = d; k > 0; k--){
-         if(this.canSlideDown(p, k)){
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      for(int k = d; k > 0; k--)    // let's find the furthest down the piece can slide
+      {
+         if(this.canSlideDown(p, k))
+         {
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = false;
-               }
-            }
+
             p.setPosition(p.getX(), p.getY() + k);
 
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
-               }
-            }
+
             return true;
          }
       }
@@ -165,22 +216,22 @@ public class Grid{
 
    public boolean slideLeft(Piece p, int d) throws InvalidPieceException{
       if(!pieces.contains(p))
-         throw new InvalidPieceException();
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
 
-      for(int k = d; k > 0; k--){
-         if(this.canSlideLeft(p, k)){
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      for(int k = d; k > 0; k--)    // let's find the furthest left the piece can slide
+      {
+         if(this.canSlideLeft(p, k))
+         {
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = false;
-               }
-            }
+
             p.setPosition(p.getX() - k, p.getY());
 
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
-               }
-            }
+
             return true;
          }
       }
@@ -188,24 +239,25 @@ public class Grid{
       return false;
    }
 
-   public boolean slideRight(Piece p, int d) throws InvalidPieceException{
+   public boolean slideRight(Piece p, int d) throws InvalidPieceException
+   {
       if(!pieces.contains(p))
-         throw new InvalidPieceException();
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
 
-      for(int k = d; k > 0; k--){
-         if(this.canSlideRight(p, k)){
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+      for(int k = d; k > 0; k--)    // let's find the furthest right the piece can slide
+      {
+         if(this.canSlideRight(p, k))
+         {
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = false;
-               }
-            }
+
             p.setPosition(p.getX() + k, p.getY());
 
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
+            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
-               }
-            }
+
             return true;
          }
       }
@@ -213,8 +265,9 @@ public class Grid{
       return false;
    }
 
-   public boolean slidePiece(Piece p, GeoVector v) throws InvalidPieceException{
-      if(v.getY() != 0 && v.getX() != 0)
+   public boolean slidePiece(Piece p, GeoVector v) throws InvalidPieceException
+   {
+      if(!v.isSingleAxis())
          return false;
 
       if(v.getY() > 0)
@@ -227,57 +280,5 @@ public class Grid{
          return slideRight(p, v.getX());
 
       return slideLeft(p, -v.getX());
-   }
-
-   public void printGrid(){
-      for(int row = 1; row <= nbRows; row++){
-         System.out.print("|");
-         for(int column = 1; column <= nbColumns; column++){
-            if(occupiedPositions[row-1][column-1])
-               System.out.print("1|");
-            else
-               System.out.print("0|");
-         }
-         System.out.println();
-      }
-   }
-
-   public Piece identify(int xpos, int ypos){
-      for(Piece p : pieces)
-         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
-            return p;
-
-      return null;
-   }
-
-   public Piece identify(Coordinates c){
-      return identify(c.getX(), c.getY());
-   }
-
-   public Piece getPiece(int ID){
-      for(Piece p : pieces)
-         if(p.getID() == ID)
-            return p;
-
-      return null;
-   }
-
-   public void removePiece(Piece p){
-      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++){
-         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++){
-            occupiedPositions[j-1][i-1] = false;
-         }
-      }
-      pieces.remove(p);
-   }
-
-   public boolean goalReached(){
-      for(Piece p : pieces){
-         if (p instanceof PieceGoal) {
-            if(!((PieceGoal) p).isAtGoalPosition())
-               return false;
-         }
-      }
-      return true;
    }
 }
