@@ -80,8 +80,8 @@ public class Grid
    public boolean goalReached()
    {
       for(Piece p : pieces)
-         if (p instanceof PieceGoal)
-            if(!((PieceGoal) p).isAtGoalPosition())
+         if (p instanceof GoalPiece)
+            if(!((GoalPiece) p).isAtGoalPosition())
                return false;
 
       return true;

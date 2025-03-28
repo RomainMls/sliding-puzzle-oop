@@ -9,7 +9,7 @@ import java.util.Scanner;
 import be.uliege.montefiore.oop.model.Grid;
 import be.uliege.montefiore.oop.model.InvalidPieceException;
 import be.uliege.montefiore.oop.model.Piece;
-import be.uliege.montefiore.oop.model.PieceGoal;
+import be.uliege.montefiore.oop.model.GoalPiece;
 
 public class SpecificationFileReader{
    private final String filename;
@@ -65,7 +65,7 @@ public class SpecificationFileReader{
          s.close();
 
          Piece OGp = g.getPiece(ID);
-         PieceGoal pg = new PieceGoal(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
+         GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
          g.removePiece(OGp);
          try{g.addPiece(pg);}
          catch(InvalidPieceException e){
