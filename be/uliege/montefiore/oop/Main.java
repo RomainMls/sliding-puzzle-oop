@@ -4,7 +4,7 @@ import be.uliege.montefiore.oop.model.*;
 import be.uliege.montefiore.oop.reader.*;
 import be.uliege.montefiore.oop.GUI.*;
 
-import java.io.IOException;
+import java.io.FileNotFoundException;
 
 public class Main{
 
@@ -25,9 +25,9 @@ public class Main{
 
          gui = new GraphicalInterface(puzzle);
       }
-      catch(IOException | InvalidFileFormatException | GUIException | DimensionsException e)
+      catch(FileNotFoundException | InvalidFileFormatException | GUIException | DimensionsException e)
       {
-         System.out.println(e);
+         System.out.println(e.getMessage());
          return;
       }
 
@@ -54,7 +54,7 @@ public class Main{
       }
       catch (GUIException e)
       {
-         System.out.println(e);
+         System.out.println(e.getMessage());
          return;
       }
       return;

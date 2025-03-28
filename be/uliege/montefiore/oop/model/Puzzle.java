@@ -73,7 +73,7 @@ public class Puzzle
          throw new PuzzleFullException();
    }
 
-   private boolean isFull()
+   public boolean isFull()
    {
       for(int i = 0; i < nbRows; i++)
          for(int j = 0; j < nbColumns; j++)
