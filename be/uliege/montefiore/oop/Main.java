@@ -21,11 +21,11 @@ public class Main{
       try
       {
          SpecificationFileReader sf = new SpecificationFileReader(args[0]);
-         puzzle = sf.readPuzzle();
+         puzzle = sf.readPuzzleNew();
 
          gui = new GraphicalInterface(puzzle);
       }
-      catch(IOException | WronglyFormattedFileException | GUIException | DimensionsException e)
+      catch(IOException | InvalidFileFormatException | GUIException | DimensionsException e)
       {
          System.out.println(e);
          return;
