@@ -35,11 +35,11 @@ public class GraphicalInterface {
    {
       Color c = new Color(170, 170, 170);
 
-      if(p instanceof GoalPiece)
+      if(p instanceof GoalPiece){
          c = ((GoalPiece)p).getColor();
-
-      if(puzzle.goalReached())
-         c = new Color(255, 191, 0);
+         if(((GoalPiece)p).isAtGoalPosition())
+            c = new Color(255, 191, 0);
+      }
 
       sp.newRectangle((p.getX() - 1) * cellSize + spacing,
                       (p.getY() - 1) * cellSize + spacing,
@@ -59,6 +59,9 @@ public class GraphicalInterface {
             if(((i+j)/squareSize) % 2 == 0)
             {
                Color c = p.getColor();
+               if(p.isAtGoalPosition())
+                  c = new Color(255, 191, 0);
+
                sp.newRectangle((p.getGoalX()-1) * cellSize + i,
                                (p.getGoalY()-1) * cellSize + j,
                                squareSize, squareSize,
