@@ -1,15 +1,12 @@
 package be.uliege.montefiore.oop.reader;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Scanner;
-
 import be.uliege.montefiore.oop.model.Grid;
 import be.uliege.montefiore.oop.model.InvalidPieceException;
 import be.uliege.montefiore.oop.model.Piece;
 import be.uliege.montefiore.oop.model.GoalPiece;
+
+import java.io.*;
+import java.util.Scanner;
 
 public class SpecificationFileReader{
    private final String filename;

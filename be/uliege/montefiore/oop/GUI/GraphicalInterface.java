@@ -1,12 +1,12 @@
 package be.uliege.montefiore.oop.GUI;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;
 import be.uliege.montefiore.oop.model.*;
 import be.uliege.montefiore.oop.reader.*;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class GraphicalInterface {
    private SlidingPuzzleGUI sp;
@@ -23,7 +23,7 @@ public class GraphicalInterface {
       grid = sf.readGrid();
 
       if(height < grid.getRows() || width < grid.getColumns())
-      throw new DimensionsException("Wrong values for window size");
+         throw new DimensionsException("Wrong values for window size");
 
       this.width = width;
       this.height = height;

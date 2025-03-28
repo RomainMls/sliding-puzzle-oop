@@ -102,8 +102,11 @@ public class Grid
       return true;
    }
 
-   private boolean canSlideLeft(Piece p, int d)
+   private boolean canSlideLeft(Piece p, int d) throws InvalidPieceException
    {
+      if(!pieces.contains(p))
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
+
       // verify end position
       if(p.getX() - d < 1)
          return false;
@@ -117,8 +120,11 @@ public class Grid
       return true;
    }
 
-   private boolean canSlideRight(Piece p, int d)
+   private boolean canSlideRight(Piece p, int d) throws InvalidPieceException
    {
+      if(!pieces.contains(p))
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
+
       // verify end position
       if(p.getX() + + p.getWidth() - 1 + d > nbColumns)
          return false;
@@ -132,8 +138,11 @@ public class Grid
       return true;
    }
 
-   private boolean canSlideUp(Piece p, int d)
+   private boolean canSlideUp(Piece p, int d) throws InvalidPieceException
    {
+      if(!pieces.contains(p))
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
+
       // verify end position
       if(p.getY() - d < 1)
          return false;
@@ -147,8 +156,11 @@ public class Grid
       return true;
    }
 
-   private boolean canSlideDown(Piece p, int d)
+   private boolean canSlideDown(Piece p, int d) throws InvalidPieceException
    {
+      if(!pieces.contains(p))
+         throw new InvalidPieceException("Piece doesn't belong to the grid");
+
       // verify end position
       if(p.getY() + p.getHeight() - 1 + d> nbRows)
          return false;
