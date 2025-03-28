@@ -2,11 +2,8 @@ package be.uliege.montefiore.oop.reader;
 
 import be.uliege.montefiore.oop.model.*;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class SpecificationFileReader{
@@ -16,7 +13,7 @@ public class SpecificationFileReader{
       this.filename = filename;
    }
 
-   public Puzzle readPuzzleNew() throws FileNotFoundException, InvalidFileFormatException{
+   public Puzzle readPuzzle() throws FileNotFoundException, InvalidFileFormatException{
       Scanner sc = new Scanner(new File(filename));
       String str = null;
 
@@ -58,12 +55,11 @@ public class SpecificationFileReader{
          }
       }
 
-      //It has stopped the loop because, we are expecting line which are not specified
       if(i != nbPieces){
          sc.close();
-         throw new InvalidFileFormatException("There are missing lines (missing pieces) in the specification file");
+         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + i+1);
       }
-   
+
       if(sc.hasNextLine()){
          str = sc.nextLine();
          values = str.split(" ");
@@ -92,83 +88,21 @@ public class SpecificationFileReader{
          Piece OGp = g.getPiece(ID);
          GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
 
-         g.removePiece(pg);
+         g.removePiece(OGp);
          try {
-            g.addPiece(OGp);
+            g.addPiece(pg);
          } catch (InvalidPieceException e) {
             sc.close();
             System.out.println(e.getMessage());
          }
       }
 
-      //It has stopped the loop because, we are expecting line which are not specified
       if(j != nbGoalPieces){
          sc.close();
-         throw new InvalidFileFormatException("There are missing lines (missing goal pieces) in the specification file");
+         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + i+1);
       }
 
       sc.close();
-      return g;
-   }
-   
-   public Puzzle readPuzzle() throws FileNotFoundException, IOException, InvalidFileFormatException{
-      BufferedReader br = new BufferedReader(new FileReader(filename));
-
-      String line = br.readLine();
-      Scanner s = new Scanner(line);
-
-      int nbRows, nbColumns, nbPieces;
-      nbColumns = s.nextInt();
-      nbRows = s.nextInt();
-      nbPieces = s.nextInt();
-      s.close();
-
-      Puzzle g = new Puzzle(nbRows, nbColumns);
-
-      for(int i = 0; i < nbPieces; i++){
-         line = br.readLine();
-         s = new Scanner(line);
-
-         int width, height, xpos, ypos;
-         width = s.nextInt();
-         height = s.nextInt();
-         xpos = s.nextInt();
-         ypos = s.nextInt();
-         s.close();
-
-         Piece p = new Piece(height, width, xpos, ypos, i+1);
-         try{
-            g.addPiece(p);
-         } catch(InvalidPieceException e){
-            br.close();
-            s.close();
-            throw new InvalidFileFormatException("Error at line " + (i + 2) + " describes an invalid piece");
-         }
-      }
-
-      s = new Scanner(br.readLine());
-      int nbGoalPieces = s.nextInt();
-
-      for(int i = 0; i < nbGoalPieces; i++){
-         s = new Scanner(br.readLine());
-
-         int ID, xpos, ypos;
-         ID = s.nextInt();
-         xpos = s.nextInt();
-         ypos = s.nextInt();
-         s.close();
-
-         Piece OGp = g.getPiece(ID);
-         GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
-         g.removePiece(OGp);
-         try{g.addPiece(pg);}
-         catch(InvalidPieceException e){
-            br.close();
-            throw new InvalidFileFormatException("Error at line " + (i + nbPieces + 3) + " describes an invalid piece");
-         }
-      }
-
-      br.close();
       return g;
    }
 }
