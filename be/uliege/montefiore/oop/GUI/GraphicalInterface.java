@@ -3,81 +3,132 @@ package be.uliege.montefiore.oop.GUI;
 import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;
 import be.uliege.montefiore.oop.model.*;
-import be.uliege.montefiore.oop.reader.*;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class GraphicalInterface {
    private SlidingPuzzleGUI sp;
-   private Puzzle Puzzle;
-   private final int width, height;
-   private int columnSize, rowSize;
-   private int offsetX;
-   private int offsetY;
+   private Puzzle puzzle;
 
-   public GraphicalInterface(int width, int height, String specificationFile) throws DimensionsException, GUIException, FileNotFoundException, IOException, WronglyFormattedFileException{
+   private final int width, height;
+   private final int innerCellSize;
+   private final int spacing;
+   private final int cellSize;
+
+   public GraphicalInterface(Puzzle p) throws GUIException, DimensionsException
+   {
+      int maxCellsize = Math.min(1600/p.getColumns(), 900/p.getRows());
+      if(maxCellsize < 20)
+         throw new DimensionsException("Can't fit properly pieces within a 1600x900 window");
+
+      cellSize = Math.min(100, maxCellsize);
+      innerCellSize = (int)(cellSize * 0.95);
+      spacing = cellSize - innerCellSize;
+
+      width = cellSize * p.getColumns();
+      height = cellSize * p.getRows();
+
       sp = new SlidingPuzzleGUI(width, height);
 
-      SpecificationFileReader sf = new SpecificationFileReader(specificationFile);
-      Puzzle = sf.readPuzzle();
-
-      if(height < Puzzle.getRows() || width < Puzzle.getColumns())
-         throw new DimensionsException("Wrong values for window size");
-
-      this.width = width;
-      this.height = height;
-      int cellSize = Math.min(width / Puzzle.getColumns(), height / Puzzle.getRows());
-      columnSize = cellSize;
-      rowSize = cellSize;
-      offsetX = (width - (columnSize * Puzzle.getColumns())) / 2;
-      offsetY = (height - (rowSize * Puzzle.getRows())) / 2;
+      puzzle = p;
    }
 
-   public void display() throws GUIException{
-      sp.startFrame();
+   private void displayPiece(Piece p) throws GUIException
+   {
+      Color c = new Color(170, 170, 170);
 
-      int space = Math.min((width / 100) * 2, (height / 100) * 2);
+      if(p instanceof GoalPiece)
+         c = ((GoalPiece)p).getColor();
 
+      if(puzzle.goalReached())
+         c = new Color(255, 191, 0);
 
-      for(int y = 1; y <= Puzzle.getRows(); y++){
-         for(int x = 1; x <= Puzzle.getColumns(); x++){
-            Piece p = Puzzle.identify(x, y);
-            if(p != null){
+      sp.newRectangle((p.getX() - 1) * cellSize + spacing,
+                      (p.getY() - 1) * cellSize + spacing,
+                      (p.getWidth() * cellSize) - 2 * spacing,
+                      (p.getHeight() * cellSize) - 2 * spacing,
+                      c.getRed(), c.getGreen(), c.getBlue());
+   }
+
+   private void displayGoalPieceIndicator(GoalPiece p) throws GUIException
+   {
+      // let's display a checkboard pattern
+      int squareSize = cellSize/10;
+      for(int i = 0; i < cellSize * p.getWidth(); i += squareSize)
+      {
+         for(int j = 0; j < cellSize * p.getHeight(); j  += squareSize)
+         {
+            if(((i+j)/squareSize) % 2 == 0)
+            {
                Color c = p.getColor();
-               sp.newRectangle((p.getX() - 1) * columnSize + offsetX + space / 2, (p.getY() - 1) * rowSize + offsetY + space / 2,
-               p.getWidth() * columnSize - space, p.getHeight() * rowSize - space,
-               c.getRed(), c.getGreen(), c.getBlue());
+               sp.newRectangle((p.getGoalX()-1) * cellSize + i,
+                               (p.getGoalY()-1) * cellSize + j,
+                               squareSize, squareSize,
+                               c.getRed(), c.getGreen(), c.getBlue());
             }
+
          }
       }
+   }
+
+   public void display() throws GUIException
+   {
+      sp.startFrame();
+
+      for(Piece p : puzzle.getPieces())
+      {
+         if(p instanceof GoalPiece)
+            displayGoalPieceIndicator((GoalPiece)p);
+      }
+
+      for(Piece p : puzzle.getPieces())
+         displayPiece(p);
+
       sp.endFrame();
    }
 
-   public boolean nextMove(){
-      int[] newMove = sp.nextMove();
-      if(newMove == null)
-      return true;
+   public void displayVictory() throws GUIException
+   {
+      sp.startFrame();
 
-      Coordinates c1 = new Coordinates(((newMove[0] - offsetX) / columnSize) + 1, ((newMove[1] - offsetY)/rowSize) + 1);
-      Coordinates c2 = new Coordinates(((newMove[2] - offsetX) / columnSize) + 1, ((newMove[3] - offsetY) / rowSize) + 1);
+      for(Piece p : puzzle.getPieces())
+      {
+         if(p instanceof GoalPiece)
+            displayPiece(p);
 
-      Piece p = Puzzle.identify(c1);
-
-      if(p == null)
-      return false;
-
-      GeoVector v = new GeoVector(c1, c2);
-      try {
-         Puzzle.slidePiece(p, v);
-      } catch (InvalidPieceException e) {
       }
-      return false;
+
+      sp.endFrame();
    }
 
+   private Coordinates toModelCoordinates(int xpos, int ypos)
+   {
+      return new Coordinates(xpos/cellSize + 1, ypos/cellSize + 1);
+   }
 
-   public boolean checkIfWin(){
-      return Puzzle.goalReached();
+   public boolean nextMove()
+   {
+      int[] newMove = sp.nextMove();
+
+      if(newMove == null)
+         return true;         // user wants to quit
+
+      Coordinates c1 = toModelCoordinates(newMove[0], newMove[1]);
+      Coordinates c2 = toModelCoordinates(newMove[2], newMove[3]);
+      GeoVector v = new GeoVector(c1, c2);
+
+      Piece p = puzzle.identify(c1);
+
+      if(p == null)
+         return false;
+
+      try
+      {
+         puzzle.slidePiece(p, v);
+      }
+      catch (InvalidPieceException e)
+      {
+         System.out.println("Strange error: piece identified from coordinates doesn't belong to the puzzle");
+      }
+      return false;
    }
 
    public void endGame(){

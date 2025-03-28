@@ -50,6 +50,11 @@ public class Puzzle
       return null;
    }
 
+   public Vector<Piece> getPieces()
+   {
+      return pieces;
+   }
+
    public void addPiece(Piece p) throws InvalidPieceException
    {
       if(pieces.contains(p))

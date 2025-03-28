@@ -42,6 +42,7 @@ public class SpecificationFileReader{
             g.addPiece(p);
          } catch(InvalidPieceException e){
             br.close();
+            s.close();
             throw new WronglyFormattedFileException("Error at line " + (i + 2) + " describes an invalid piece");
          }
       }

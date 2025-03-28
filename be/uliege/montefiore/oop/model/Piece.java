@@ -1,20 +1,16 @@
 package be.uliege.montefiore.oop.model;
 
-import be.uliege.montefiore.oop.GUI.Color;
-
 public class Piece{
    private final int height;
    private final int width;
    private Coordinates position;
-   private final int ID;
-   private Color color;
+   protected final int ID;
 
    public Piece(int height, int width, Coordinates position, int ID){
       this.height = height;
       this.width = width;
       this.position = position;
       this.ID = ID;
-      this.color = generateColor();
    }
 
    public Piece(int height, int width, int xpos, int ypos, int ID){
@@ -27,10 +23,6 @@ public class Piece{
 
    public int getWidth(){
       return width;
-   }
-
-   public Color getColor(){
-      return color;
    }
 
    public Coordinates getPosition(){
@@ -55,12 +47,5 @@ public class Piece{
 
    public void setPosition(Coordinates position){
       this.position = position;
-   }
-
-   private Color generateColor(){
-      int r = (ID * 123) % 256;
-      int g = (ID * 321) % 256;
-      int b = (ID * 231) % 256;
-      return new Color(r, g, b);
    }
 }

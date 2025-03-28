@@ -1,35 +1,57 @@
 package be.uliege.montefiore.oop;
 
-import be.uliege.montefiore.oop.GUIException;
-import be.uliege.montefiore.oop.reader.WronglyFormattedFileException;
+import be.uliege.montefiore.oop.model.*;
+import be.uliege.montefiore.oop.reader.*;
 import be.uliege.montefiore.oop.GUI.*;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main{
 
    public static void main(String[] args)
    {
-      GraphicalInterface gI = null;
-      try {
-         gI = new GraphicalInterface(400, 500, args[0]);
-      } catch (IOException | WronglyFormattedFileException | DimensionsException | GUIException e) {
+      Puzzle puzzle;
+      GraphicalInterface gui;
+      try
+      {
+         SpecificationFileReader sf = new SpecificationFileReader(args[0]);
+         puzzle = sf.readPuzzle();
+      }
+      catch(IOException | WronglyFormattedFileException e)
+      {
          System.out.println(e);
          return;
       }
 
-      boolean finished = false;
       try
       {
-         gI.display();
-         while(!finished)
+         gui = new GraphicalInterface(puzzle);
+      }
+      catch(DimensionsException | GUIException e)
+      {
+         System.out.println(e);
+         return;
+      }
+
+      boolean quit = false;
+      boolean gameWon = false;
+      try
+      {
+         while(!quit && !gameWon)
          {
-            finished = gI.nextMove();
-            if(!finished || (finished && gI.checkIfWin()))
-               gI.display();
+            gui.display();
+            quit = gui.nextMove();
+            gameWon = puzzle.goalReached();
          }
-         gI.endGame();
+         if(gameWon)
+         {
+            quit = false;
+            gui.displayVictory();
+            // display that you won
+            while(!quit)
+               quit = gui.nextMove();
+         }
+         gui.endGame();
       }
       catch (GUIException e)
       {

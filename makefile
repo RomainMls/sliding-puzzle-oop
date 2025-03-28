@@ -19,5 +19,8 @@ klotski: compile
 15: compile
 	java -cp $(CP) $(MAIN_CLASS) 15-puzzle.spzl
 
+test: compile
+	java -cp $(CP) $(MAIN_CLASS) test.spzl
+
 clean:
 	find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
