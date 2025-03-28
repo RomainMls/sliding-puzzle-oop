@@ -20,7 +20,7 @@ public class SpecificationFileReader{
       if(sc.hasNextLine())
          str = sc.nextLine();
 
-      String[] values = str.split(" ");
+      String[] values = str.split("\\s+");
       if(values.length != 3){
          sc.close();
          throw new InvalidFileFormatException("The first line of the specification file must be of the form 'nbColumns nbRows nbPieces'");
@@ -34,7 +34,7 @@ public class SpecificationFileReader{
       int i;
       for(i = 0; i < nbPieces && sc.hasNextLine(); i++){
          str = sc.nextLine();
-         values = str.split(" ");
+         values = str.split("\\s+");
 
          if(values.length != 4){
             sc.close();
@@ -63,7 +63,7 @@ public class SpecificationFileReader{
 
       if(sc.hasNextLine()){
          str = sc.nextLine();
-         values = str.split(" ");
+         values = str.split("\\s+");
       }
 
       if(values.length != 1 || values[0].isEmpty()){
@@ -75,7 +75,7 @@ public class SpecificationFileReader{
       int j;
       for(j = 0; j < nbGoalPieces && sc.hasNextLine(); j++){
          str = sc.nextLine();
-         values = str.split(" ");
+         values = str.split("\\s+");
 
          if(values.length != 3){
             sc.close();
