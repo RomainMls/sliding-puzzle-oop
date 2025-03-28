@@ -213,7 +213,7 @@ public class Grid{
       return false;
    }
 
-   public boolean slidePiece(Piece p, Coordinates v) throws InvalidPieceException{
+   public boolean slidePiece(Piece p, GeoVector v) throws InvalidPieceException{
       if(v.getY() != 0 && v.getX() != 0)
          return false;
 

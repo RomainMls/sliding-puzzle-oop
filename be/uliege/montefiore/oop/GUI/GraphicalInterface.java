@@ -5,13 +5,8 @@ import java.io.IOException;
 
 import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;
-import be.uliege.montefiore.oop.model.Color;
-import be.uliege.montefiore.oop.model.Coordinates;
-import be.uliege.montefiore.oop.model.Grid;
-import be.uliege.montefiore.oop.model.InvalidPieceException;
-import be.uliege.montefiore.oop.model.Piece;
-import be.uliege.montefiore.oop.reader.SpecificationFileReader;
-import be.uliege.montefiore.oop.reader.WronglyFormattedFileException;
+import be.uliege.montefiore.oop.model.*;
+import be.uliege.montefiore.oop.reader.*;
 
 public class GraphicalInterface {
   private SlidingPuzzleGUI sp;
@@ -72,7 +67,7 @@ public class GraphicalInterface {
     if(p == null)
       return false;
 
-    Coordinates v = Coordinates.toVector(c1, c2);
+    GeoVector v = new GeoVector(c1, c2);
     try {
       grid.slidePiece(p, v);
     } catch (InvalidPieceException e) {

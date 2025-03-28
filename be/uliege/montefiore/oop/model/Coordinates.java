@@ -1,8 +1,8 @@
 package be.uliege.montefiore.oop.model;
 
 public class Coordinates{
-   private int xpos;
-   private int ypos;
+   protected int xpos;
+   protected int ypos;
 
    public Coordinates(int xpos, int ypos){
       this.xpos = xpos;
@@ -31,9 +31,5 @@ public class Coordinates{
 
    public boolean equals(Coordinates c2){
       return this.xpos == c2.xpos && this.ypos == c2.ypos;
-   }
-
-   public static Coordinates toVector(Coordinates c1, Coordinates c2){
-      return new Coordinates(c2.xpos - c1.xpos, c2.ypos - c1.ypos);
    }
 }
