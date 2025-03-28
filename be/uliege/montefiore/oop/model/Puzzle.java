@@ -55,19 +55,32 @@ public class Puzzle
       return pieces;
    }
 
-   public void addPiece(Piece p) throws InvalidPieceException
+   public void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
    {
       if(pieces.contains(p))
          return;
 
       if(!verifyPosition(p))
-         throw new InvalidPieceException();
+         throw new InvalidPieceException("Piece does not fit in the puzzle");
 
       pieces.add(p);
 
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
          for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
             occupiedPositions[j-1][i-1] = true;
+
+      if(isFull())
+         throw new PuzzleFullException();
+   }
+
+   private boolean isFull()
+   {
+      for(int i = 0; i < nbRows; i++)
+         for(int j = 0; j < nbColumns; j++)
+            if(occupiedPositions[i][j] == false)
+               return false;
+
+      return true;
    }
 
    public void removePiece(Piece p)

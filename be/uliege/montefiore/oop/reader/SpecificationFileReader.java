@@ -49,9 +49,10 @@ public class SpecificationFileReader{
          Piece p = new Piece(height, width, xpos, ypos, i+1);
          try {
             g.addPiece(p);
-         } catch (InvalidPieceException e) {
+         } catch (PuzzleFullException | InvalidPieceException e) {
             sc.close();
             System.out.println(e.getMessage());
+            return null;
          }
       }
 
@@ -91,9 +92,10 @@ public class SpecificationFileReader{
          g.removePiece(OGp);
          try {
             g.addPiece(pg);
-         } catch (InvalidPieceException e) {
+         } catch (PuzzleFullException | InvalidPieceException e) {
             sc.close();
             System.out.println(e.getMessage());
+            return null;
          }
       }
 

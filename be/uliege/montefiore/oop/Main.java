@@ -21,7 +21,7 @@ public class Main{
       try
       {
          SpecificationFileReader sf = new SpecificationFileReader(args[0]);
-         puzzle = sf.readPuzzleNew();
+         puzzle = sf.readPuzzle();
 
          gui = new GraphicalInterface(puzzle);
       }
