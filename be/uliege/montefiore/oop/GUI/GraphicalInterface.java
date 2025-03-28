@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class GraphicalInterface {
    private SlidingPuzzleGUI sp;
-   private Grid grid;
+   private Puzzle Puzzle;
    private final int width, height;
    private int columnSize, rowSize;
    private int offsetX;
@@ -20,18 +20,18 @@ public class GraphicalInterface {
       sp = new SlidingPuzzleGUI(width, height);
 
       SpecificationFileReader sf = new SpecificationFileReader(specificationFile);
-      grid = sf.readGrid();
+      Puzzle = sf.readPuzzle();
 
-      if(height < grid.getRows() || width < grid.getColumns())
+      if(height < Puzzle.getRows() || width < Puzzle.getColumns())
          throw new DimensionsException("Wrong values for window size");
 
       this.width = width;
       this.height = height;
-      int cellSize = Math.min(width / grid.getColumns(), height / grid.getRows());
+      int cellSize = Math.min(width / Puzzle.getColumns(), height / Puzzle.getRows());
       columnSize = cellSize;
       rowSize = cellSize;
-      offsetX = (width - (columnSize * grid.getColumns())) / 2;
-      offsetY = (height - (rowSize * grid.getRows())) / 2;
+      offsetX = (width - (columnSize * Puzzle.getColumns())) / 2;
+      offsetY = (height - (rowSize * Puzzle.getRows())) / 2;
    }
 
    public void display() throws GUIException{
@@ -40,9 +40,9 @@ public class GraphicalInterface {
       int space = Math.min((width / 100) * 2, (height / 100) * 2);
 
 
-      for(int y = 1; y <= grid.getRows(); y++){
-         for(int x = 1; x <= grid.getColumns(); x++){
-            Piece p = grid.identify(x, y);
+      for(int y = 1; y <= Puzzle.getRows(); y++){
+         for(int x = 1; x <= Puzzle.getColumns(); x++){
+            Piece p = Puzzle.identify(x, y);
             if(p != null){
                Color c = p.getColor();
                sp.newRectangle((p.getX() - 1) * columnSize + offsetX + space / 2, (p.getY() - 1) * rowSize + offsetY + space / 2,
@@ -62,14 +62,14 @@ public class GraphicalInterface {
       Coordinates c1 = new Coordinates(((newMove[0] - offsetX) / columnSize) + 1, ((newMove[1] - offsetY)/rowSize) + 1);
       Coordinates c2 = new Coordinates(((newMove[2] - offsetX) / columnSize) + 1, ((newMove[3] - offsetY) / rowSize) + 1);
 
-      Piece p = grid.identify(c1);
+      Piece p = Puzzle.identify(c1);
 
       if(p == null)
       return false;
 
       GeoVector v = new GeoVector(c1, c2);
       try {
-         grid.slidePiece(p, v);
+         Puzzle.slidePiece(p, v);
       } catch (InvalidPieceException e) {
       }
       return false;
@@ -77,7 +77,7 @@ public class GraphicalInterface {
 
 
    public boolean checkIfWin(){
-      return grid.goalReached();
+      return Puzzle.goalReached();
    }
 
    public void endGame(){

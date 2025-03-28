@@ -2,14 +2,14 @@ package be.uliege.montefiore.oop.model;
 
 import java.util.Vector;
 
-public class Grid
+public class Puzzle
 {
    private final int nbRows;
    private final int nbColumns;
    private Vector<Piece> pieces;
    private boolean[][] occupiedPositions;
 
-   public Grid(int nbRows, int nbColumns)
+   public Puzzle(int nbRows, int nbColumns)
    {
       this.nbRows = nbRows;
       this.nbColumns = nbColumns;
@@ -89,7 +89,7 @@ public class Grid
 
    private boolean verifyPosition(Piece p)
    {
-      // verify the piece fits in the grid
+      // verify the piece fits in the Puzzle
       if(p.getX() < 1 || p.getY() < 1 || p.getX() + p.getWidth() - 1 > nbColumns || p.getY() + p.getHeight() - 1> nbRows)
          return false;
 
@@ -105,7 +105,7 @@ public class Grid
    private boolean canSlideLeft(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       // verify end position
       if(p.getX() - d < 1)
@@ -123,7 +123,7 @@ public class Grid
    private boolean canSlideRight(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       // verify end position
       if(p.getX() + + p.getWidth() - 1 + d > nbColumns)
@@ -141,7 +141,7 @@ public class Grid
    private boolean canSlideUp(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       // verify end position
       if(p.getY() - d < 1)
@@ -159,7 +159,7 @@ public class Grid
    private boolean canSlideDown(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       // verify end position
       if(p.getY() + p.getHeight() - 1 + d> nbRows)
@@ -177,7 +177,7 @@ public class Grid
    public boolean slideUp(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest up the piece can slide
       {
@@ -203,7 +203,7 @@ public class Grid
    public boolean slideDown(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest down the piece can slide
       {
@@ -228,7 +228,7 @@ public class Grid
 
    public boolean slideLeft(Piece p, int d) throws InvalidPieceException{
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest left the piece can slide
       {
@@ -254,7 +254,7 @@ public class Grid
    public boolean slideRight(Piece p, int d) throws InvalidPieceException
    {
       if(!pieces.contains(p))
-         throw new InvalidPieceException("Piece doesn't belong to the grid");
+         throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest right the piece can slide
       {

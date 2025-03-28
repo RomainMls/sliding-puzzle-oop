@@ -1,9 +1,6 @@
 package be.uliege.montefiore.oop.reader;
 
-import be.uliege.montefiore.oop.model.Grid;
-import be.uliege.montefiore.oop.model.InvalidPieceException;
-import be.uliege.montefiore.oop.model.Piece;
-import be.uliege.montefiore.oop.model.GoalPiece;
+import be.uliege.montefiore.oop.model.*;
 
 import java.io.*;
 import java.util.Scanner;
@@ -15,7 +12,7 @@ public class SpecificationFileReader{
       this.filename = filename;
    }
 
-   public Grid readGrid() throws FileNotFoundException, IOException, WronglyFormattedFileException{
+   public Puzzle readPuzzle() throws FileNotFoundException, IOException, WronglyFormattedFileException{
       BufferedReader br = new BufferedReader(new FileReader(filename));
 
       String line = br.readLine();
@@ -27,7 +24,7 @@ public class SpecificationFileReader{
       nbPieces = s.nextInt();
       s.close();
 
-      Grid g = new Grid(nbRows, nbColumns);
+      Puzzle g = new Puzzle(nbRows, nbColumns);
 
       for(int i = 0; i < nbPieces; i++){
          line = br.readLine();
