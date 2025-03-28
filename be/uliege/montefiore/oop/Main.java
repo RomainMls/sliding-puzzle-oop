@@ -10,24 +10,22 @@ public class Main{
 
    public static void main(String[] args)
    {
+      if(args.length == 0 || args[0] == null)
+      {
+         System.out.println("ERROR: No specification file given");
+         return;
+      }
+
       Puzzle puzzle;
       GraphicalInterface gui;
       try
       {
          SpecificationFileReader sf = new SpecificationFileReader(args[0]);
          puzzle = sf.readPuzzle();
-      }
-      catch(IOException | WronglyFormattedFileException e)
-      {
-         System.out.println(e);
-         return;
-      }
 
-      try
-      {
          gui = new GraphicalInterface(puzzle);
       }
-      catch(DimensionsException | GUIException e)
+      catch(IOException | WronglyFormattedFileException | GUIException | DimensionsException e)
       {
          System.out.println(e);
          return;
@@ -45,9 +43,10 @@ public class Main{
          }
          if(gameWon)
          {
+            // special victory screen
             quit = false;
             gui.displayVictory();
-            // display that you won
+
             while(!quit)
                quit = gui.nextMove();
          }

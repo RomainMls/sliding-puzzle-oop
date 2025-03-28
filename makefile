@@ -16,7 +16,7 @@ run: compile
 klotski: compile
 	java -cp $(CP) $(MAIN_CLASS) klotski.spzl
 
-15: compile
+15-puzzle: compile
 	java -cp $(CP) $(MAIN_CLASS) 15-puzzle.spzl
 
 test: compile
