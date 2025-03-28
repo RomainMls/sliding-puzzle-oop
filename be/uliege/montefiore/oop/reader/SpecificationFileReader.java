@@ -23,7 +23,7 @@ public class SpecificationFileReader{
       if(sc.hasNextLine())
          str = sc.nextLine();
 
-      String[] values = str.split("\\s+");
+      String[] values = str.split(" ");
       if(values.length != 3){
          sc.close();
          throw new InvalidFileFormatException("The first line of the specification file must be of the form 'nbColumns nbRows nbPieces'");
@@ -37,7 +37,7 @@ public class SpecificationFileReader{
       int i;
       for(i = 0; i < nbPieces && sc.hasNextLine(); i++){
          str = sc.nextLine();
-         values = str.split("\\s+");
+         values = str.split(" ");
 
          if(values.length != 4){
             sc.close();
@@ -66,7 +66,7 @@ public class SpecificationFileReader{
    
       if(sc.hasNextLine()){
          str = sc.nextLine();
-         values = str.split("\\s+");
+         values = str.split(" ");
       }
 
       if(values.length != 1 || values[0].isEmpty()){
@@ -75,9 +75,10 @@ public class SpecificationFileReader{
       }
 
       int nbGoalPieces = Integer.valueOf(values[0]);
-      for(int j = 0; j < nbGoalPieces && sc.hasNextLine(); j++){
+      int j;
+      for(j = 0; j < nbGoalPieces && sc.hasNextLine(); j++){
          str = sc.nextLine();
-         values = str.split("\\s+");
+         values = str.split(" ");
 
          if(values.length != 3){
             sc.close();
@@ -87,7 +88,7 @@ public class SpecificationFileReader{
          int ID = Integer.valueOf(values[0]);
          int xpos = Integer.valueOf(values[1]);
          int ypos = Integer.valueOf(values[2]);
-         
+
          Piece OGp = g.getPiece(ID);
          GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
 
@@ -99,6 +100,13 @@ public class SpecificationFileReader{
             System.out.println(e.getMessage());
          }
       }
+
+      //It has stopped the loop because, we are expecting line which are not specified
+      if(j != nbGoalPieces){
+         sc.close();
+         throw new InvalidFileFormatException("There are missing lines (missing goal pieces) in the specification file");
+      }
+
       sc.close();
       return g;
    }
