@@ -8,6 +8,9 @@ public class GraphicalInterface {
    private SlidingPuzzleGUI sp;
    private Puzzle puzzle;
 
+   static final int maxWidth = 1600, maxHeight = 900;
+   static final int standardCellSize = 100;
+
    private final int width, height;
    private final int innerCellSize;
    private final int spacing;
@@ -15,17 +18,16 @@ public class GraphicalInterface {
 
    public GraphicalInterface(Puzzle p) throws GUIException, DimensionsException
    {
-      int maxCellsize = Math.min(1600/p.getColumns(), 900/p.getRows());
+      int maxCellsize = Math.min(maxWidth/p.getColumns(), maxHeight/p.getRows());
       if(maxCellsize < 20)
-         throw new DimensionsException("Can't fit properly pieces within a 1600x900 window");
+         throw new DimensionsException("Can't fit the puzzle properly within a " + maxWidth +"x" + maxHeight+ "window");
 
-      cellSize = Math.min(100, maxCellsize);
+      cellSize = Math.min(standardCellSize, maxCellsize);
       innerCellSize = (int)(cellSize * 0.95);
       spacing = cellSize - innerCellSize;
 
       width = cellSize * p.getColumns();
       height = cellSize * p.getRows();
-
       sp = new SlidingPuzzleGUI(width, height);
 
       puzzle = p;
