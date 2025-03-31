@@ -71,7 +71,6 @@ public class GraphicalInterface
                                squareSize, squareSize,
                                c.getRed(), c.getGreen(), c.getBlue());
             }
-
          }
       }
    }
