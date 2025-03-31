@@ -4,12 +4,13 @@ import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;
 import be.uliege.montefiore.oop.model.*;
 
-public class GraphicalInterface {
+public class GraphicalInterface
+{
    private SlidingPuzzleGUI sp;
    private Puzzle puzzle;
 
    static final int maxWidth = 1600, maxHeight = 900;
-   static final int standardCellSize = 100;
+   static final int standardCellSize = 110;
 
    private final int width, height;
    private final int innerCellSize;
@@ -37,7 +38,8 @@ public class GraphicalInterface {
    {
       Color c = new Color(170, 170, 170);
 
-      if(p instanceof GoalPiece){
+      if(p instanceof GoalPiece)
+      {
          c = ((GoalPiece)p).getColor();
          if(((GoalPiece)p).isAtGoalPosition())
             c = new Color(255, 191, 0);
@@ -53,7 +55,7 @@ public class GraphicalInterface {
    private void displayGoalPieceIndicator(GoalPiece p) throws GUIException
    {
       // let's display a checkboard pattern
-      int squareSize = cellSize/10;
+      int squareSize = cellSize/11;
       for(int i = 0; i < cellSize * p.getWidth(); i += squareSize)
       {
          for(int j = 0; j < cellSize * p.getHeight(); j  += squareSize)
@@ -79,10 +81,8 @@ public class GraphicalInterface {
       sp.startFrame();
 
       for(Piece p : puzzle.getPieces())
-      {
          if(p instanceof GoalPiece)
             displayGoalPieceIndicator((GoalPiece)p);
-      }
 
       for(Piece p : puzzle.getPieces())
          displayPiece(p);
@@ -95,11 +95,8 @@ public class GraphicalInterface {
       sp.startFrame();
 
       for(Piece p : puzzle.getPieces())
-      {
          if(p instanceof GoalPiece)
             displayPiece(p);
-
-      }
 
       sp.endFrame();
    }

@@ -52,7 +52,7 @@ public class Puzzle
 
    public Vector<Piece> getPieces()
    {
-      return pieces;
+      return (Vector<Piece>)(pieces.clone());
    }
 
    public void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException

@@ -35,13 +35,11 @@ public class GoalPiece extends Piece{
       return goalPosition;
    }
 
-   public int getGoalX()
-   {
+   public int getGoalX(){
       return goalPosition.getX();
    }
 
-   public int getGoalY()
-   {
+   public int getGoalY(){
       return goalPosition.getY();
    }
 

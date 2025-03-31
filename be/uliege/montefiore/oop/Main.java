@@ -6,8 +6,8 @@ import be.uliege.montefiore.oop.GUI.*;
 
 import java.io.FileNotFoundException;
 
-public class Main{
-
+public class Main
+{
    public static void main(String[] args)
    {
       if(args.length == 0 || args[0] == null)
