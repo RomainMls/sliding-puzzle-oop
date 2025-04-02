@@ -19,7 +19,7 @@ public class GraphicalInterface
 
    public GraphicalInterface(Puzzle p) throws GUIException, DimensionsException
    {
-      int maxCellsize = Math.min(maxWidth/p.getColumns(), maxHeight/p.getRows());
+      int maxCellsize = Math.min((int)(maxWidth/p.getColumns()), (int)(maxHeight/p.getRows()));
       if(maxCellsize < 20)
          throw new DimensionsException("Can't fit the puzzle properly within a " + maxWidth +"x" + maxHeight+ "window");
 
@@ -55,10 +55,10 @@ public class GraphicalInterface
    private void displayGoalPieceIndicator(GoalPiece p) throws GUIException
    {
       // let's display a checkboard pattern
-      int squareSize = cellSize/11;
-      for(int i = 0; i < cellSize * p.getWidth(); i += squareSize)
+      int squareSize = (int)(cellSize/11);
+      for(int i = 0; i <= cellSize * p.getWidth() - squareSize; i += squareSize)
       {
-         for(int j = 0; j < cellSize * p.getHeight(); j  += squareSize)
+         for(int j = 0; j <= cellSize * p.getHeight() - squareSize; j  += squareSize)
          {
             if(((i+j)/squareSize) % 2 == 0)
             {
@@ -66,7 +66,7 @@ public class GraphicalInterface
                if(p.isAtGoalPosition())
                   c = new Color(255, 191, 0);
 
-               sp.newRectangle((p.getGoalX()-1) * cellSize + i,
+                  sp.newRectangle((p.getGoalX()-1) * cellSize + i,
                                (p.getGoalY()-1) * cellSize + j,
                                squareSize, squareSize,
                                c.getRed(), c.getGreen(), c.getBlue());

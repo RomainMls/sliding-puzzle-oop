@@ -6,7 +6,7 @@ CP := .:$(JAR_FILE)
 
 all: compile
 
-compile: clean
+compile:
 	javac -cp $(CP) $(SRC_DIR)/*.java
 
 # use ' make run ARGS="filename" '
