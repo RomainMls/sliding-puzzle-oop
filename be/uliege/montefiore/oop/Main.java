@@ -27,7 +27,7 @@ public class Main
       }
       catch(FileNotFoundException | InvalidFileFormatException | GUIException | DimensionsException e)
       {
-         System.out.println(e.getMessage());
+         System.out.println(e);
          return;
       }
 
@@ -60,7 +60,7 @@ public class Main
       }
       catch (GUIException e)
       {
-         System.out.println(e.getMessage());
+         System.out.println(e);
          return;
       }
 
