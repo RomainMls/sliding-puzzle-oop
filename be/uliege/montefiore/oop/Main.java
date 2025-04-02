@@ -41,8 +41,11 @@ public class Main
             quit = gui.nextMove();
             gameWon = puzzle.goalReached();
          }
+
          if(gameWon)
          {
+            System.out.println("Game won in " + puzzle.getmoveCount() + " moves!");
+
             // special victory screen
             quit = false;
             gui.displayVictory();
@@ -50,6 +53,9 @@ public class Main
             while(!quit)
                quit = gui.nextMove();
          }
+         else
+            System.out.println("You'll eventually get it!");
+
          gui.endGame();
       }
       catch (GUIException e)
@@ -57,6 +63,7 @@ public class Main
          System.out.println(e.getMessage());
          return;
       }
+
       return;
    }
 }

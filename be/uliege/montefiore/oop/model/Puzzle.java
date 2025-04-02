@@ -8,6 +8,7 @@ public class Puzzle
    private final int nbColumns;
    private Vector<Piece> pieces;
    private boolean[][] occupiedPositions;
+   private int moveCounter = 0;
 
    public Puzzle(int nbRows, int nbColumns)
    {
@@ -25,6 +26,11 @@ public class Puzzle
    public int getColumns()
    {
       return nbColumns;
+   }
+
+   public int getmoveCount()
+   {
+      return moveCounter;
    }
 
    public Piece identify(int xpos, int ypos)
@@ -211,6 +217,7 @@ public class Puzzle
                for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
 
+            moveCounter++;
             return true;
          }
       }
@@ -237,6 +244,7 @@ public class Puzzle
                for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
 
+            moveCounter++;
             return true;
          }
       }
@@ -262,6 +270,7 @@ public class Puzzle
                for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
 
+            moveCounter++;
             return true;
          }
       }
@@ -288,6 +297,7 @@ public class Puzzle
                for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
                   occupiedPositions[j-1][i-1] = true;
 
+            moveCounter++;
             return true;
          }
       }
