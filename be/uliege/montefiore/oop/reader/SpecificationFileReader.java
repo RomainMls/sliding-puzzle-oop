@@ -90,6 +90,7 @@ public class SpecificationFileReader{
 
          Piece OGp = g.getPiece(ID);
          GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
+                        // can't we use a form of cloning ?
 
          g.removePiece(OGp);
          try {

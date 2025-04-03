@@ -1,6 +1,6 @@
 package be.uliege.montefiore.oop.model;
 
-public class Coordinates{
+public class Coordinates implements Cloneable{
    protected int xpos;
    protected int ypos;
 
@@ -25,11 +25,16 @@ public class Coordinates{
       this.ypos = ypos;
    }
 
-   public static boolean areEqual(Coordinates c1, Coordinates c2){
-      return c1.xpos == c2.xpos && c1.ypos == c2.ypos;
+   public boolean equals(Object o){
+      if(o == null || !(o instanceof Coordinates))
+         return false;
+
+      Coordinates c = (Coordinates) o;
+
+      return this.xpos == c.xpos && this.ypos == c.ypos;
    }
 
-   public boolean equals(Coordinates c2){
-      return this.xpos == c2.xpos && this.ypos == c2.ypos;
+   public Object clone(){
+      return new Coordinates(xpos, ypos);
    }
 }

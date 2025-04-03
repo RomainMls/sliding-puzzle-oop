@@ -29,6 +29,10 @@ public class Piece{
       return position;
    }
 
+   public Coordinates getPosition2(){
+      return (Coordinates)(position.clone());
+   }
+
    public int getX(){
       return position.getX();
    }
