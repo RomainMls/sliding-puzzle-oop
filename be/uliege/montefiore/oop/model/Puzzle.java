@@ -56,9 +56,15 @@ public class Puzzle
       return null;
    }
 
-   public Vector<Piece> getPieces()
+   public Piece[] getPieces()
    {
-      return (Vector<Piece>)(pieces.clone());
+      int size = pieces.size();
+      Piece[] pieces = new Piece[size];
+
+      for(int i = 0; i < size; i++)
+         pieces[i] = this.pieces.get(i);
+
+      return pieces;
    }
 
    public void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException

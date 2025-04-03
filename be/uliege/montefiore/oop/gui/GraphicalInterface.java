@@ -10,7 +10,7 @@ public class GraphicalInterface
    private Puzzle puzzle;
 
    static final int maxWidth = 1600, maxHeight = 900;
-   static final int standardCellSize = 110;
+   static final int standardCellSize = 100;
 
    private final int width, height;
    private final int innerCellSize;
@@ -55,7 +55,7 @@ public class GraphicalInterface
    private void displayGoalPieceIndicator(GoalPiece p) throws GUIException
    {
       // let's display a checkboard pattern
-      int squareSize = (int)(cellSize/11);
+      int squareSize = (int)(cellSize/20);
       for(int i = 0; i <= cellSize * p.getWidth() - squareSize; i += squareSize)
       {
          for(int j = 0; j <= cellSize * p.getHeight() - squareSize; j  += squareSize)
