@@ -1,8 +1,8 @@
 package be.uliege.montefiore.oop;
 
+import be.uliege.montefiore.oop.gui.*;
 import be.uliege.montefiore.oop.model.*;
 import be.uliege.montefiore.oop.reader.*;
-import be.uliege.montefiore.oop.GUI.*;
 
 import java.io.FileNotFoundException;
 

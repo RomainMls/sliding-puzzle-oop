@@ -6,8 +6,11 @@ public class GeoVector extends Coordinates{
         super(c2.xpos - c1.xpos, c2.ypos - c1.ypos);
     }
 
-    // function to verify that the vector is one directional
+    // function to verify that the vector goes through exactly one axis
     public boolean isSingleAxis(){
+        if(xpos == 0 && ypos == 0)
+            return false;
+
         return xpos == 0 || ypos == 0;
     }
 }

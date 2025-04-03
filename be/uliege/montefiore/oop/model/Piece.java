@@ -1,20 +1,20 @@
 package be.uliege.montefiore.oop.model;
 
-public class Piece{
-   private final int height;
-   private final int width;
-   private Coordinates position;
-   protected final int ID;
+public class Piece implements Cloneable{
+   protected final int height;
+   protected final int width;
+   protected Coordinates position;    // coordinates of the top left corner
+   protected final int id;
 
-   public Piece(int height, int width, Coordinates position, int ID){
+   public Piece(int height, int width, Coordinates position, int id){
       this.height = height;
       this.width = width;
       this.position = position;
-      this.ID = ID;
+      this.id = id;
    }
 
-   public Piece(int height, int width, int xpos, int ypos, int ID){
-      this(height, width, new Coordinates(xpos, ypos), ID);
+   public Piece(int height, int width, int xpos, int ypos, int id){
+      this(height, width, new Coordinates(xpos, ypos), id);
    }
 
    public int getHeight(){
@@ -42,14 +42,20 @@ public class Piece{
    }
 
    public int getID(){
-      return ID;
+      return id;
    }
 
    public void setPosition(int xpos, int ypos){
-      this.position = new Coordinates(xpos, ypos);
+      position.setX(xpos);
+      position.setY(ypos);
    }
 
    public void setPosition(Coordinates position){
       this.position = position;
+   }
+
+   public Object clone(){
+      Coordinates c = (Coordinates)(position.clone());
+      return new Piece(height, width, c, id);
    }
 }

@@ -1,6 +1,6 @@
 package be.uliege.montefiore.oop.model;
 
-import be.uliege.montefiore.oop.GUI.*;
+import be.uliege.montefiore.oop.gui.*;
 
 public class GoalPiece extends Piece{
    private final Coordinates goalPosition;
@@ -21,9 +21,9 @@ public class GoalPiece extends Piece{
    }
 
    private Color generateColor(){
-      int r = (ID * 123) % 256;
-      int g = (ID * 321) % 256;
-      int b = (ID * 231) % 256;
+      int r = (id * 123) % 256;
+      int g = (id * 321) % 256;
+      int b = (id * 231) % 256;
       return new Color(r, g, b);
    }
 
@@ -45,5 +45,11 @@ public class GoalPiece extends Piece{
 
    public boolean isAtGoalPosition(){
       return this.getX() == goalPosition.getX() && this.getY() == goalPosition.getY();
+   }
+
+   public Object clone(){
+      Coordinates p = (Coordinates)(position.clone());
+      Coordinates gp = (Coordinates)(goalPosition.clone());
+      return new GoalPiece(width, height, p, id, gp);
    }
 }

@@ -1,4 +1,4 @@
-package be.uliege.montefiore.oop.GUI;
+package be.uliege.montefiore.oop.gui;
 
 import be.uliege.montefiore.oop.GUIException;
 import be.uliege.montefiore.oop.SlidingPuzzleGUI;

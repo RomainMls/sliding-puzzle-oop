@@ -1,4 +1,4 @@
-package be.uliege.montefiore.oop.GUI;
+package be.uliege.montefiore.oop.gui;
 
 public class DimensionsException extends Exception{
    public DimensionsException(){

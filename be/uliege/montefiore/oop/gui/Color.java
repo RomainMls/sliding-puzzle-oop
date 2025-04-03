@@ -1,4 +1,4 @@
-package be.uliege.montefiore.oop.GUI;
+package be.uliege.montefiore.oop.gui;
 
 public class Color{
    private int r;
