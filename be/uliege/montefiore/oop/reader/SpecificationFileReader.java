@@ -49,10 +49,12 @@ public class SpecificationFileReader{
          Piece p = new Piece(height, width, xpos, ypos, i+1);
          try {
             g.addPiece(p);
-         } catch (PuzzleFullException | InvalidPieceException e) {
+         } catch (InvalidPieceException e) {
             sc.close();
-            System.out.println(e.getMessage());
-            return null;
+            throw new InvalidFileFormatException("Unable to fit piece " + i + " to the puzzle");
+         } catch (PuzzleFullException e) {
+            sc.close();
+            throw new InvalidFileFormatException("File describes a full puzzle (unsolvable)");
          }
       }
 
@@ -92,10 +94,12 @@ public class SpecificationFileReader{
          g.removePiece(OGp);
          try {
             g.addPiece(pg);
-         } catch (PuzzleFullException | InvalidPieceException e) {
+         } catch (InvalidPieceException e) {
             sc.close();
-            System.out.println(e.getMessage());
-            return null;
+            throw new InvalidFileFormatException("Unable to fit piece " + i + " to the puzzle");
+         } catch (PuzzleFullException e) {
+            sc.close();
+            throw new InvalidFileFormatException("File describes a full puzzle (unsolvable)");
          }
       }
 
