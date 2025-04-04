@@ -29,7 +29,7 @@ public class SpecificationFileReader{
       int nbColumns = Integer.valueOf(values[0]);
       int nbRows = Integer.valueOf(values[1]);
       int nbPieces = Integer.valueOf(values[2]);
-      Puzzle g = new Puzzle(nbRows, nbColumns);
+      Puzzle p = new Puzzle(nbRows, nbColumns);
 
       int i;
       for(i = 0; i < nbPieces && sc.hasNextLine(); i++){
@@ -46,14 +46,13 @@ public class SpecificationFileReader{
          int xpos = Integer.valueOf(values[2]);
          int ypos = Integer.valueOf(values[3]);
 
-         Piece p = new Piece(height, width, xpos, ypos, i+1);
-         try {
-            g.addPiece(p);
-         } catch (InvalidPieceException e) {
-            sc.close();
+         try{
+            p.addNewPiece(xpos, ypos, width, height, i+1);
+         }
+         catch(InvalidPieceException e){
             throw new InvalidFileFormatException("Unable to fit piece " + i + " to the puzzle");
-         } catch (PuzzleFullException e) {
-            sc.close();
+         }
+         catch(PuzzleFullException e){
             throw new InvalidFileFormatException("File describes a full puzzle (unsolvable)");
          }
       }
@@ -85,16 +84,11 @@ public class SpecificationFileReader{
          }
 
          int id = Integer.valueOf(values[0]);
-         int xpos = Integer.valueOf(values[1]);
-         int ypos = Integer.valueOf(values[2]);
+         int goalPositionX = Integer.valueOf(values[1]);
+         int goalPositionY = Integer.valueOf(values[2]);
 
-         Piece OGp = g.getPiece(id);
-         GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), id, xpos, ypos);
-                        // can't we use a form of cloning ?
-
-         g.removePiece(id);
          try {
-            g.addPiece(pg);
+            p.transformPieceToGoalPiece(id, goalPositionX, goalPositionY);
          } catch (InvalidPieceException e) {
             sc.close();
             throw new InvalidFileFormatException("Unable to fit piece " + id + " to the puzzle");
@@ -110,6 +104,6 @@ public class SpecificationFileReader{
       }
 
       sc.close();
-      return g;
+      return p;
    }
 }

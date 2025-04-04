@@ -123,7 +123,7 @@ public class GraphicalInterface
       }
       catch (InvalidPieceException e)
       {
-         System.out.println("Strange error: piece identified from coordinates doesn't belong to the puzzle");
+         // user did not click on a piece, nothing to do
       }
       return false;
    }

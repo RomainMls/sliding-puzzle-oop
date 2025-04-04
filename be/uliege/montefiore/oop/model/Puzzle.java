@@ -132,6 +132,22 @@ public class Puzzle
          throw new PuzzleFullException();
    }
 
+   public void addNewPiece(int xpos, int ypos, int width, int height, int id) throws InvalidPieceException, PuzzleFullException
+   {
+      addPiece(new Piece(height, width, xpos, ypos, id));
+   }
+
+   public void transformPieceToGoalPiece(int id, int goalPositionX, int goalPositionY) throws InvalidPieceException, PuzzleFullException
+   {
+      Piece p = identify(id);
+      if(p == null)
+         throw new InvalidPieceException("Transforming piece to goal piece: id given refers to no piece");
+
+      GoalPiece gp = new GoalPiece(p.getWidth(), p.getHeight(), p.getPosition(), id, goalPositionX, goalPositionY);
+      removePiece(id);
+      addPiece(gp);
+   }
+
    public boolean isFull()
    {
       for(int i = 0; i < nbRows; i++)
