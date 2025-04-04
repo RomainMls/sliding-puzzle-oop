@@ -85,16 +85,16 @@ public class Puzzle
 
    public int getID(int xpos, int ypos) throws InvalidPieceException
    {
-      for(Piece p : pieces)
-         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
-            return p.getID();
+      Piece p = identify(xpos, ypos);
+      if(p != null)
+         return p.getID();
 
       throw new InvalidPieceException();
    }
 
    public int getID(Coordinates c) throws InvalidPieceException
    {
-      return getID(c.getX(), c.getY());
+      return getID(c.xpos, c.ypos);
    }
 
    public Piece[] getPieces()
@@ -110,7 +110,7 @@ public class Puzzle
       return array;
    }
 
-   public void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
+   private void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
    {
       if(pieces.contains(p))
          return;
