@@ -118,7 +118,7 @@ public class GraphicalInterface
 
       try
       {
-         int pieceID = puzzle.getID(c1);
+         int pieceID = puzzle.identify(c1);
          puzzle.slidePiece(pieceID, v);
       }
       catch (InvalidPieceException e)

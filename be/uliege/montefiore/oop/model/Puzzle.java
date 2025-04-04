@@ -33,7 +33,7 @@ public class Puzzle
       return moveCounter;
    }
 
-   private Piece identify(int xpos, int ypos)
+   private Piece findPiece(int xpos, int ypos)
    {
       for(Piece p : pieces)
          if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
@@ -42,12 +42,12 @@ public class Puzzle
       return null;
    }
 
-   private Piece identify(Coordinates c)
+   private Piece findPiece(Coordinates c)
    {
-      return identify(c.getX(), c.getY());
+      return findPiece(c.getX(), c.getY());
    }
 
-   private Piece identify(int id)
+   private Piece findPiece(int id)
    {
       for(Piece p : pieces)
          if(p.getID() == id)
@@ -58,7 +58,7 @@ public class Puzzle
 
    public Piece getPiece(int id)
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p != null)
          return (Piece)(p.clone());
          // we return a clone of the piece in order to preserve
@@ -69,7 +69,7 @@ public class Puzzle
 
    public Piece getPiece(int xpos, int ypos)
    {
-      Piece p = identify(xpos, ypos);
+      Piece p = findPiece(xpos, ypos);
       if(p != null)
          return (Piece)(p.clone());
          // we return a clone of the piece in order to preserve
@@ -83,18 +83,18 @@ public class Puzzle
       return getPiece(c.xpos, c.ypos);
    }
 
-   public int getID(int xpos, int ypos) throws InvalidPieceException
+   public int identify(int xpos, int ypos) throws InvalidPieceException
    {
-      Piece p = identify(xpos, ypos);
+      Piece p = findPiece(xpos, ypos);
       if(p != null)
          return p.getID();
 
       throw new InvalidPieceException();
    }
 
-   public int getID(Coordinates c) throws InvalidPieceException
+   public int identify(Coordinates c) throws InvalidPieceException
    {
-      return getID(c.xpos, c.ypos);
+      return identify(c.xpos, c.ypos);
    }
 
    public Piece[] getPieces()
@@ -139,7 +139,7 @@ public class Puzzle
 
    public void transformPieceToGoalPiece(int id, int goalPositionX, int goalPositionY) throws InvalidPieceException, PuzzleFullException
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Transforming piece to goal piece: id given refers to no piece");
 
@@ -160,7 +160,7 @@ public class Puzzle
 
    public void removePiece(int id)
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          return;
 
@@ -270,7 +270,7 @@ public class Puzzle
 
    public boolean slideUp(int id, int d) throws InvalidPieceException
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
@@ -298,7 +298,7 @@ public class Puzzle
 
    public boolean slideDown(int id, int d) throws InvalidPieceException
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
@@ -325,7 +325,7 @@ public class Puzzle
    }
 
    public boolean slideLeft(int id, int d) throws InvalidPieceException{
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
@@ -353,7 +353,7 @@ public class Puzzle
 
    public boolean slideRight(int id, int d) throws InvalidPieceException
    {
-      Piece p = identify(id);
+      Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
