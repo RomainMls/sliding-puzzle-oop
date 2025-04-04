@@ -116,14 +116,10 @@ public class GraphicalInterface
       Coordinates c2 = toModelCoordinates(newMove[2], newMove[3]);
       GeoVector v = new GeoVector(c1, c2);
 
-      Piece p = puzzle.identify(c1);
-
-      if(p == null)
-         return false;
-
       try
       {
-         puzzle.slidePiece(p, v);
+         int pieceID = puzzle.getID(c1);
+         puzzle.slidePiece(pieceID, v);
       }
       catch (InvalidPieceException e)
       {
@@ -132,7 +128,8 @@ public class GraphicalInterface
       return false;
    }
 
-   public void endGame(){
+   public void endGame()
+   {
       sp.endFrame();
    }
 }

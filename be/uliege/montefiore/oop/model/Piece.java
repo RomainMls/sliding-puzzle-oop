@@ -26,10 +26,6 @@ public class Piece implements Cloneable{
    }
 
    public Coordinates getPosition(){
-      return position;
-   }
-
-   public Coordinates getPosition2(){
       return (Coordinates)(position.clone());
    }
 

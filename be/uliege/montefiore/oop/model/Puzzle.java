@@ -33,7 +33,7 @@ public class Puzzle
       return moveCounter;
    }
 
-   public Piece identify(int xpos, int ypos)
+   private Piece identify(int xpos, int ypos)
    {
       for(Piece p : pieces)
          if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
@@ -42,29 +42,72 @@ public class Puzzle
       return null;
    }
 
-   public Piece identify(Coordinates c)
+   private Piece identify(Coordinates c)
    {
       return identify(c.getX(), c.getY());
    }
 
-   public Piece getPiece(int ID)
+   private Piece identify(int id)
    {
       for(Piece p : pieces)
-         if(p.getID() == ID)
+         if(p.getID() == id)
             return p;
 
       return null;
    }
 
+   public Piece getPiece(int id)
+   {
+      Piece p = identify(id);
+      if(p != null)
+         return (Piece)(p.clone());
+         // we return a clone of the piece in order to preserve
+         // the puzzle's integrity. We do not trust the user of the puzzle
+
+      return null;
+   }
+
+   public Piece getPiece(int xpos, int ypos)
+   {
+      Piece p = identify(xpos, ypos);
+      if(p != null)
+         return (Piece)(p.clone());
+         // we return a clone of the piece in order to preserve
+         // the puzzle's integrity. We do not trust the user of the puzzle
+
+      return null;
+   }
+
+   public Piece getPiece(Coordinates c)
+   {
+      return getPiece(c.xpos, c.ypos);
+   }
+
+   public int getID(int xpos, int ypos) throws InvalidPieceException
+   {
+      for(Piece p : pieces)
+         if(xpos >= p.getX() && xpos < p.getX() + p.getWidth() && ypos >= p.getY() && ypos < p.getY() + p.getHeight())
+            return p.getID();
+
+      throw new InvalidPieceException();
+   }
+
+   public int getID(Coordinates c) throws InvalidPieceException
+   {
+      return getID(c.getX(), c.getY());
+   }
+
    public Piece[] getPieces()
    {
       int size = pieces.size();
-      Piece[] pieces = new Piece[size];
+      Piece[] array = new Piece[size];
 
       for(int i = 0; i < size; i++)
-         pieces[i] = this.pieces.get(i);
+         array[i] = (Piece)(pieces.get(i)).clone();
+         // we return a clone of the piece in order to preserve
+         // the puzzle's integrity. We do not trust the user of the puzzle
 
-      return pieces;
+      return array;
    }
 
    public void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
@@ -72,8 +115,12 @@ public class Puzzle
       if(pieces.contains(p))
          return;
 
+      for(Piece p2 : pieces)
+         if(p.getID() == p2.getID())
+            throw new InvalidPieceException("Cannot add given piece to the puzzle: id(" + p.getID() + ") already used");
+
       if(!verifyPosition(p))
-         throw new InvalidPieceException("Piece does not fit in the puzzle");
+         throw new InvalidPieceException("Cannot add piece to the puzzle: piece given does not fit in the puzzle");
 
       pieces.add(p);
 
@@ -95,9 +142,10 @@ public class Puzzle
       return true;
    }
 
-   public void removePiece(Piece p)
+   public void removePiece(int id)
    {
-      if(!pieces.contains(p))
+      Piece p = identify(id);
+      if(p == null)
          return;
 
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
@@ -204,9 +252,10 @@ public class Puzzle
       return true;
    }
 
-   public boolean slideUp(Piece p, int d) throws InvalidPieceException
+   public boolean slideUp(int id, int d) throws InvalidPieceException
    {
-      if(!pieces.contains(p))
+      Piece p = identify(id);
+      if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest up the piece can slide
@@ -231,9 +280,10 @@ public class Puzzle
       return false;
    }
 
-   public boolean slideDown(Piece p, int d) throws InvalidPieceException
+   public boolean slideDown(int id, int d) throws InvalidPieceException
    {
-      if(!pieces.contains(p))
+      Piece p = identify(id);
+      if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest down the piece can slide
@@ -258,8 +308,9 @@ public class Puzzle
       return false;
    }
 
-   public boolean slideLeft(Piece p, int d) throws InvalidPieceException{
-      if(!pieces.contains(p))
+   public boolean slideLeft(int id, int d) throws InvalidPieceException{
+      Piece p = identify(id);
+      if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest left the piece can slide
@@ -284,9 +335,10 @@ public class Puzzle
       return false;
    }
 
-   public boolean slideRight(Piece p, int d) throws InvalidPieceException
+   public boolean slideRight(int id, int d) throws InvalidPieceException
    {
-      if(!pieces.contains(p))
+      Piece p = identify(id);
+      if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
       for(int k = d; k > 0; k--)    // let's find the furthest right the piece can slide
@@ -311,20 +363,20 @@ public class Puzzle
       return false;
    }
 
-   public boolean slidePiece(Piece p, GeoVector v) throws InvalidPieceException
+   public boolean slidePiece(int id, GeoVector v) throws InvalidPieceException
    {
       if(!v.isSingleAxis())
          return false;
 
       if(v.getY() > 0)
-         return slideDown(p, v.getY());
+         return slideDown(id, v.getY());
 
       if(v.getY() < 0)
-         return slideUp(p, -v.getY());
+         return slideUp(id, -v.getY());
 
       if(v.getX() > 0)
-         return slideRight(p, v.getX());
+         return slideRight(id, v.getX());
 
-      return slideLeft(p, -v.getX());
+      return slideLeft(id, -v.getX());
    }
 }

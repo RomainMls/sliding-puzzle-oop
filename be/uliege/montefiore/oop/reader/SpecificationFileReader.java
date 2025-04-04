@@ -84,20 +84,20 @@ public class SpecificationFileReader{
             throw new InvalidFileFormatException("The line " + nbPieces+j+3 + " of the specification file must be of the form 'nb xpos ypos' for that goal piece");
          }
 
-         int ID = Integer.valueOf(values[0]);
+         int id = Integer.valueOf(values[0]);
          int xpos = Integer.valueOf(values[1]);
          int ypos = Integer.valueOf(values[2]);
 
-         Piece OGp = g.getPiece(ID);
-         GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), ID, xpos, ypos);
+         Piece OGp = g.getPiece(id);
+         GoalPiece pg = new GoalPiece(OGp.getWidth(), OGp.getHeight(), OGp.getPosition(), id, xpos, ypos);
                         // can't we use a form of cloning ?
 
-         g.removePiece(OGp);
+         g.removePiece(id);
          try {
             g.addPiece(pg);
          } catch (InvalidPieceException e) {
             sc.close();
-            throw new InvalidFileFormatException("Unable to fit piece " + i + " to the puzzle");
+            throw new InvalidFileFormatException("Unable to fit piece " + id + " to the puzzle");
          } catch (PuzzleFullException e) {
             sc.close();
             throw new InvalidFileFormatException("File describes a full puzzle (unsolvable)");
