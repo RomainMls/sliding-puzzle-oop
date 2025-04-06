@@ -36,7 +36,7 @@ public class GraphicalInterface
 
    private void displayPiece(Piece p) throws GUIException
    {
-      Color c = new Color(170, 170, 170);
+      Color c = new Color(220, 220,220);
 
       if(p instanceof GoalPiece)
       {

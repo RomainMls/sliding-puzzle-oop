@@ -33,6 +33,7 @@ public class Puzzle
       return moveCounter;
    }
 
+   // findPiece methods return the objects used by the Puzzle, in order to protect integrity, these methods are private
    private Piece findPiece(int xpos, int ypos)
    {
       for(Piece p : pieces)
@@ -110,6 +111,7 @@ public class Puzzle
       return array;
    }
 
+   // the following method is private. Using an object given as argument might threaten integrity
    private void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
    {
       if(pieces.contains(p))

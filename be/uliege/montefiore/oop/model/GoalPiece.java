@@ -3,7 +3,7 @@ package be.uliege.montefiore.oop.model;
 import be.uliege.montefiore.oop.gui.*;
 
 public class GoalPiece extends Piece{
-   private final Coordinates goalPosition;
+   private final Coordinates goalPosition;   // coordinates of the top left corne
    private Color color;
 
    public GoalPiece(int width, int height, Coordinates position, int ID, Coordinates goalPosition){

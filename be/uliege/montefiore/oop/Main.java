@@ -31,10 +31,10 @@ public class Main
          return;
       }
 
-      boolean quit = false;
-      boolean gameWon = false;
       try
       {
+         boolean quit = false;
+         boolean gameWon = false;
          while(!quit && !gameWon)
          {
             gui.display();
