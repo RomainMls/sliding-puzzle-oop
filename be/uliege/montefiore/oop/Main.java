@@ -45,6 +45,15 @@ public class Main
          if(gameWon)
          {
             System.out.println("Game won in " + puzzle.getmoveCount() + " moves!");
+            System.out.println("  _____                       __          __           _\n" + //
+                              " / ____|                      \\ \\        / /          | |\n" + //
+                              "| |  __  __ _ _ __ ___   ___   \\ \\  /\\  / /__  _ __   | |\n" + //
+                              "| | |_ |/ _` | '_ ` _ \\ / _ \\   \\ \\/  \\/ / _ \\| '_ \\  | |\n" + //
+                              "| |__| | (_| | | | | | |  __/    \\  /\\  / (_) | | | | |_|\n" + //
+                              " \\_____|\\__,_|_| |_| |_|\\___|     \\/  \\/ \\___/|_| |_| (_)\n" + //
+                              "\n" + //
+                              "\n" + //
+                              "");
 
             // special victory screen
             quit = false;
