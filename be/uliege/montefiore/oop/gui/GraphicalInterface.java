@@ -54,29 +54,6 @@ public class GraphicalInterface
 
    private void displayGoalPieceIndicator(GoalPiece p) throws GUIException
    {
-      // let's display a checkboard pattern
-      int squareSize = (int)(cellSize/20);
-      for(int i = 0; i <= cellSize * p.getWidth() - squareSize; i += squareSize)
-      {
-         for(int j = 0; j <= cellSize * p.getHeight() - squareSize; j  += squareSize)
-         {
-            if(((i+j)/squareSize) % 2 == 0)
-            {
-               Color c = p.getColor();
-               // if(p.isAtGoalPosition())
-               //    c = new Color(255, 191, 0);
-
-               sp.newRectangle((p.getGoalX()-1) * cellSize + i,
-                               (p.getGoalY()-1) * cellSize + j,
-                               squareSize, squareSize,
-                               c.getRed(), c.getGreen(), c.getBlue());
-            }
-         }
-      }
-   }
-
-   private void displayGoalPieceIndicator2(GoalPiece p) throws GUIException
-   {
       Color c = p.getColor();
       if(p.isAtGoalPosition())
          c = new Color(255, 191, 0);
@@ -84,22 +61,28 @@ public class GraphicalInterface
       // display top border
 
       //top
-      sp.newRectangle((p.getGoalX()-1) * cellSize, (p.getGoalY()-1) * cellSize,
-                      p.getWidth() * cellSize,
-                      spacing, c.getRed(), c.getGreen(), c.getBlue());
+      sp.newRectangle((p.getGoalX()-1) * cellSize,
+                      (p.getGoalY()-1) * cellSize,
+                      p.getWidth() * cellSize, spacing,
+                      c.getRed(), c.getGreen(), c.getBlue());
 
       // bottom
-      sp.newRectangle((p.getGoalX() - 1) * cellSize, (p.getGoalY()-1 + p.getHeight()) * cellSize - spacing,
-                      p.getWidth() * cellSize,
-                      spacing, c.getRed(), c.getGreen(), c.getBlue());
+      sp.newRectangle((p.getGoalX() - 1) * cellSize,
+                      (p.getGoalY()-1 + p.getHeight()) * cellSize - spacing,
+                      p.getWidth() * cellSize, spacing,
+                      c.getRed(), c.getGreen(), c.getBlue());
 
       // left
-      sp.newRectangle((p.getGoalX()-1) * cellSize, (p.getGoalY()-1) * cellSize, spacing, p.getHeight() * cellSize,
+      sp.newRectangle((p.getGoalX()-1) * cellSize,
+                      (p.getGoalY()-1) * cellSize, spacing,
+                      p.getHeight() * cellSize,
                       c.getRed(), c.getGreen(), c.getBlue());
 
       // right
-      sp.newRectangle((p.getGoalX()-1 + p.getWidth()) * cellSize - spacing, (p.getGoalY()-1) * cellSize,
-                      spacing, p.getHeight() * cellSize, c.getRed(), c.getGreen(), c.getBlue());
+      sp.newRectangle((p.getGoalX()-1 + p.getWidth()) * cellSize - spacing,
+                      (p.getGoalY()-1) * cellSize,
+                      spacing, p.getHeight() * cellSize,
+                      c.getRed(), c.getGreen(), c.getBlue());
    }
 
    public void display() throws GUIException
@@ -108,7 +91,7 @@ public class GraphicalInterface
 
       for(Piece p : puzzle.getPieces())
          if(p instanceof GoalPiece)
-            displayGoalPieceIndicator2((GoalPiece)p);
+            displayGoalPieceIndicator((GoalPiece)p);
 
       for(Piece p : puzzle.getPieces())
          displayPiece(p);
