@@ -8,6 +8,13 @@ import java.io.FileNotFoundException;
 
 public class Main
 {
+   static final String gameWonString = "  ____                       __        __          _\n" + //
+            " / ___| __ _ _ __ ___   ___  \\ \\      / /__  _ __ | |\n" + //
+            "| |  _ / _` | '_ ` _ \\ / _ \\  \\ \\ /\\ / / _ \\| '_ \\| |\n" + //
+            "| |_| | (_| | | | | | |  __/   \\ V  V / (_) | | | |_|\n" + //
+            " \\____|\\__,_|_| |_| |_|\\___|    \\_/\\_/ \\___/|_| |_(_)\n" + //
+            "";
+
    public static void main(String[] args)
    {
       if(args.length == 0 || args[0] == null)
@@ -45,15 +52,7 @@ public class Main
          if(gameWon)
          {
             System.out.println("Game won in " + puzzle.getmoveCount() + " moves!");
-            System.out.println("  _____                       __          __           _\n" + //
-                              " / ____|                      \\ \\        / /          | |\n" + //
-                              "| |  __  __ _ _ __ ___   ___   \\ \\  /\\  / /__  _ __   | |\n" + //
-                              "| | |_ |/ _` | '_ ` _ \\ / _ \\   \\ \\/  \\/ / _ \\| '_ \\  | |\n" + //
-                              "| |__| | (_| | | | | | |  __/    \\  /\\  / (_) | | | | |_|\n" + //
-                              " \\_____|\\__,_|_| |_| |_|\\___|     \\/  \\/ \\___/|_| |_| (_)\n" + //
-                              "\n" + //
-                              "\n" + //
-                              "");
+            System.out.println(gameWonString);
 
             // special victory screen
             quit = false;
