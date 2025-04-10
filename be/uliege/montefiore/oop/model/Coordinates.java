@@ -26,7 +26,7 @@ public class Coordinates implements Cloneable{
    }
 
    public boolean equals(Object o){
-      if(o == null || !(o instanceof Coordinates))
+      if(!(o instanceof Coordinates))
          return false;
 
       Coordinates c = (Coordinates) o;
