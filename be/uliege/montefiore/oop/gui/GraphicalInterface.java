@@ -115,12 +115,13 @@ public class GraphicalInterface
       return new Coordinates(xpos/cellSize + 1, ypos/cellSize + 1);
    }
 
-   public boolean nextMove()
+   // return true if a move has been performed but false otherwise.
+   public boolean nextMove() throws QuitGameException
    {
       int[] newMove = sp.nextMove();
 
       if(newMove == null)
-         return true;         // user wants to quit
+         throw new QuitGameException();       // user wants to quit
 
       Coordinates c1 = toModelCoordinates(newMove[0], newMove[1]);
       Coordinates c2 = toModelCoordinates(newMove[2], newMove[3]);
@@ -129,13 +130,16 @@ public class GraphicalInterface
       try
       {
          int pieceID = puzzle.identify(c1);
-         puzzle.slidePiece(pieceID, v);
+         if(puzzle.slidePiece(pieceID, v))
+            return true;
+         else
+            return false;
       }
       catch (InvalidPieceException e)
       {
          // user did not click on a piece, nothing to do
+         return false;
       }
-      return false;
    }
 
    public void endGame()
