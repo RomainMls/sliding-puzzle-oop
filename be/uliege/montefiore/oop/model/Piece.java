@@ -51,7 +51,16 @@ public class Piece implements Cloneable{
    }
 
    public Object clone(){
-      Coordinates c = (Coordinates)(position.clone());
-      return new Piece(height, width, c, id);
+      Piece clone;
+      try
+      {
+         clone = (Piece) super.clone();
+         clone.position = (Coordinates) position.clone();
+      }
+      catch(CloneNotSupportedException e)
+      {
+         throw new InternalError("Unable to clone");
+      }
+      return clone;
    }
 }

@@ -35,6 +35,13 @@ public class Coordinates implements Cloneable{
    }
 
    public Object clone(){
-      return new Coordinates(xpos, ypos);
+      Coordinates clone;
+      try{
+         clone = (Coordinates) super.clone();
+      }
+      catch(CloneNotSupportedException e){
+         throw new InternalError("Unable to clone Coordinates");
+      }
+      return clone;
    }
 }
