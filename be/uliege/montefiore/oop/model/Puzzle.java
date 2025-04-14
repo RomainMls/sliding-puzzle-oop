@@ -33,7 +33,7 @@ public class Puzzle
       return moveCounter;
    }
 
-   // findPiece methods return the objects used by the Puzzle, in order to protect integrity, these methods are private
+   // findPiece methods return the objects used by the Puzzle, in order to protect coherence, these methods are private
    private Piece findPiece(int xpos, int ypos)
    {
       for(Piece p : pieces)
@@ -63,7 +63,7 @@ public class Puzzle
       if(p != null)
          return (Piece)(p.clone());
          // we return a clone of the piece in order to preserve
-         // the puzzle's integrity. We do not trust the user of the puzzle
+         // the puzzle's coherence. We do not trust the user of the puzzle
 
       return null;
    }
@@ -74,7 +74,7 @@ public class Puzzle
       if(p != null)
          return (Piece)(p.clone());
          // we return a clone of the piece in order to preserve
-         // the puzzle's integrity. We do not trust the user of the puzzle
+         // the puzzle's coherence. We do not trust the user of the puzzle
 
       return null;
    }
@@ -106,12 +106,12 @@ public class Puzzle
       for(int i = 0; i < size; i++)
          array[i] = (Piece)(pieces.get(i)).clone();
          // we return a clone of the piece in order to preserve
-         // the puzzle's integrity. We do not trust the user of the puzzle
+         // the puzzle's coherence. We do not trust the user of the puzzle
 
       return array;
    }
 
-   // the following method is private. Using an object given as argument might threaten integrity
+   // the following method is private. Using an object given as argument might threaten coherence
    private void addPiece(Piece p) throws InvalidPieceException, PuzzleFullException
    {
       if(pieces.contains(p))
