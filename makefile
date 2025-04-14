@@ -1,6 +1,6 @@
 SRC_DIR := be/uliege/montefiore/oop
 JAR_FILE := sliding-puzzle-gui.jar
-MAIN_CLASS := be.uliege.montefiore.oop.Main
+MAIN_CLASS := be.uliege.montefiore.oop.SlidingPuzzle
 
 CP := .:$(JAR_FILE)
 

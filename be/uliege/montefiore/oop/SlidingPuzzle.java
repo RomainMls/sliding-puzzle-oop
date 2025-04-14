@@ -6,7 +6,7 @@ import be.uliege.montefiore.oop.reader.*;
 
 import java.io.FileNotFoundException;
 
-public class Main
+public class SlidingPuzzle
 {
    public static void main(String[] args)
    {
