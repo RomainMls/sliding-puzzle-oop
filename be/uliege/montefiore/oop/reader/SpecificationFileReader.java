@@ -50,9 +50,11 @@ public class SpecificationFileReader{
             p.addNewPiece(xpos, ypos, width, height, i+1);
          }
          catch(InvalidPieceException e){
+            sc.close();
             throw new InvalidFileFormatException("Unable to fit piece " + i + " to the puzzle");
          }
          catch(PuzzleFullException e){
+            sc.close();
             throw new InvalidFileFormatException("File describes a full puzzle (unsolvable)");
          }
       }
