@@ -79,7 +79,7 @@ public class SpecificationFileReader{
          sc.close();
          throw new InvalidFileFormatException("The puzzle given has no goal");
       }
-      
+
       int j;
       for(j = 0; j < nbGoalPieces && sc.hasNextLine(); j++){
          str = sc.nextLine();
