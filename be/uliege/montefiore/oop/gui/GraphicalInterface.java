@@ -34,6 +34,23 @@ public class GraphicalInterface
       puzzle = p;
    }
 
+   private void displayIndicators() throws GUIException
+   {
+      Color c = new Color(220, 220,220);
+
+      int indicatorSize = cellSize/10;
+
+      for(int i = 0; i < puzzle.getColumns(); i++)
+      {
+         for(int j = 0; j < puzzle.getRows(); j++)
+         {
+            sp.newRectangle((i) * cellSize + (cellSize - indicatorSize)/2,
+                            (j) * cellSize + (cellSize - indicatorSize)/2,
+                            indicatorSize, indicatorSize, c.getRed(), c.getGreen(), c.getBlue());
+         }
+      }
+   }
+
    private void displayPiece(Piece p) throws GUIException
    {
       Color c = new Color(220, 220,220);
@@ -88,6 +105,8 @@ public class GraphicalInterface
    public void display() throws GUIException
    {
       sp.startFrame();
+
+      displayIndicators();
 
       for(Piece p : puzzle.getPieces())
          if(p instanceof GoalPiece)

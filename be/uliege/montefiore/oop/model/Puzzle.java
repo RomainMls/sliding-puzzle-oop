@@ -270,7 +270,7 @@ public class Puzzle
       return true;
    }
 
-   private void changePiecePosition(Piece p, int x, int y)
+   private void movePiece(Piece p, int x, int y)
    {
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
          for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
@@ -281,6 +281,8 @@ public class Puzzle
       for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
          for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
             occupiedPositions[j-1][i-1] = true;
+
+      moveCounter++;
    }
 
    public boolean slideUp(int id, int d) throws InvalidPieceException
@@ -291,7 +293,7 @@ public class Puzzle
 
       if(canSlideUp(p, d))
       {
-         changePiecePosition(p, p.getX(), p.getY() - d);
+         movePiece(p, p.getX(), p.getY() - d);
          return true;
       }
       return false;
@@ -305,7 +307,7 @@ public class Puzzle
 
       if(canSlideDown(p, d))
       {
-         changePiecePosition(p, p.getX(), p.getY() + d);
+         movePiece(p, p.getX(), p.getY() + d);
          return true;
       }
       return false;
@@ -319,7 +321,7 @@ public class Puzzle
 
       if(canSlideLeft(p, d))
       {
-         changePiecePosition(p, p.getX() - d, p.getY());
+         movePiece(p, p.getX() - d, p.getY());
          return true;
       }
       return false;
@@ -333,7 +335,7 @@ public class Puzzle
 
       if(canSlideRight(p, d))
       {
-         changePiecePosition(p, p.getX() + d, p.getY());
+         movePiece(p, p.getX() + d, p.getY());
          return true;
       }
       return false;
