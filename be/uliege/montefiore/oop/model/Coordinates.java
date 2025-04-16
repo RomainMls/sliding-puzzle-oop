@@ -25,15 +25,6 @@ public class Coordinates implements Cloneable{
       this.ypos = ypos;
    }
 
-   public boolean equals(Object o){
-      if(!(o instanceof Coordinates))
-         return false;
-
-      Coordinates c = (Coordinates) o;
-
-      return this.xpos == c.xpos && this.ypos == c.ypos;
-   }
-
    public Object clone(){
       Coordinates clone;
       try{
