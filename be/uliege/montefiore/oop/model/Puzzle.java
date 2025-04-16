@@ -270,31 +270,30 @@ public class Puzzle
       return true;
    }
 
+   private void changePiecePosition(Piece p, int x, int y)
+   {
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
+            occupiedPositions[j-1][i-1] = false;
+
+      p.setPosition(x, y);
+
+      for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
+         for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
+            occupiedPositions[j-1][i-1] = true;
+   }
+
    public boolean slideUp(int id, int d) throws InvalidPieceException
    {
       Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
-      for(int k = d; k > 0; k--)    // let's find the furthest up the piece can slide
+      if(canSlideUp(p, d))
       {
-         if(this.canSlideUp(p, k))
-         {
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = false;
-
-            p.setPosition(p.getX(), p.getY() - k);
-
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = true;
-
-            moveCounter++;
-            return true;
-         }
+         changePiecePosition(p, p.getX(), p.getY() - d);
+         return true;
       }
-
       return false;
    }
 
@@ -304,52 +303,25 @@ public class Puzzle
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
-      for(int k = d; k > 0; k--)    // let's find the furthest down the piece can slide
+      if(canSlideDown(p, d))
       {
-         if(this.canSlideDown(p, k))
-         {
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = false;
-
-            p.setPosition(p.getX(), p.getY() + k);
-
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = true;
-
-            moveCounter++;
-            return true;
-         }
+         changePiecePosition(p, p.getX(), p.getY() + d);
+         return true;
       }
-
       return false;
    }
 
-   public boolean slideLeft(int id, int d) throws InvalidPieceException{
+   public boolean slideLeft(int id, int d) throws InvalidPieceException
+   {
       Piece p = findPiece(id);
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
-      for(int k = d; k > 0; k--)    // let's find the furthest left the piece can slide
+      if(canSlideLeft(p, d))
       {
-         if(this.canSlideLeft(p, k))
-         {
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = false;
-
-            p.setPosition(p.getX() - k, p.getY());
-
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = true;
-
-            moveCounter++;
-            return true;
-         }
+         changePiecePosition(p, p.getX() - d, p.getY());
+         return true;
       }
-
       return false;
    }
 
@@ -359,25 +331,11 @@ public class Puzzle
       if(p == null)
          throw new InvalidPieceException("Piece doesn't belong to the Puzzle");
 
-      for(int k = d; k > 0; k--)    // let's find the furthest right the piece can slide
+      if(canSlideRight(p, d))
       {
-         if(this.canSlideRight(p, k))
-         {
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = false;
-
-            p.setPosition(p.getX() + k, p.getY());
-
-            for(int i = p.getX(); i < p.getX() + p.getWidth(); i++)
-               for(int j = p.getY(); j < p.getY() + p.getHeight(); j++)
-                  occupiedPositions[j-1][i-1] = true;
-
-            moveCounter++;
-            return true;
-         }
+         changePiecePosition(p, p.getX() + d, p.getY());
+         return true;
       }
-
       return false;
    }
 
