@@ -38,7 +38,7 @@ public class SpecificationFileReader{
 
          if(values.length != 4){
             sc.close();
-            throw new InvalidFileFormatException("The line " + i+2 + " of the specification file must be of the form 'width height xpos ypos' for that piece");
+            throw new InvalidFileFormatException("The line " + (i+2) + " of the specification file must be of the form 'width height xpos ypos' for that piece");
          }
 
          int width = Integer.valueOf(values[0]);
@@ -61,7 +61,7 @@ public class SpecificationFileReader{
 
       if(i != nbPieces){
          sc.close();
-         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + i+1);
+         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + (i+1));
       }
 
       if(sc.hasNextLine()){
@@ -71,10 +71,15 @@ public class SpecificationFileReader{
 
       if(values.length != 1 || values[0].isEmpty()){
          sc.close();
-         throw new InvalidFileFormatException("The line " + nbPieces+2 + " of the specification file must be of the form 'ngoals', specifying the number of goal pieces");
+         throw new InvalidFileFormatException("The line " + (nbPieces+2) + " of the specification file must be of the form 'ngoals', specifying the number of goal pieces");
       }
 
       int nbGoalPieces = Integer.valueOf(values[0]);
+      if(nbGoalPieces == 0){
+         sc.close();
+         throw new InvalidFileFormatException("The puzzle given has no goal");
+      }
+      
       int j;
       for(j = 0; j < nbGoalPieces && sc.hasNextLine(); j++){
          str = sc.nextLine();
@@ -82,7 +87,7 @@ public class SpecificationFileReader{
 
          if(values.length != 3){
             sc.close();
-            throw new InvalidFileFormatException("The line " + nbPieces+j+3 + " of the specification file must be of the form 'nb xpos ypos' for that goal piece");
+            throw new InvalidFileFormatException("The line " + (nbPieces+j+3) + " of the specification file must be of the form 'nb xpos ypos' for that goal piece");
          }
 
          int id = Integer.valueOf(values[0]);
@@ -102,7 +107,7 @@ public class SpecificationFileReader{
 
       if(j != nbGoalPieces){
          sc.close();
-         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + i+1);
+         throw new InvalidFileFormatException("Error reading pieces, expected " + nbPieces + " pieces, read: " + (i+1));
       }
 
       sc.close();
