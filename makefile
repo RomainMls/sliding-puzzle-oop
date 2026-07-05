@@ -1,26 +1,28 @@
-SRC_DIR := be/uliege/montefiore/oop
-JAR_FILE := sliding-puzzle-gui.jar
+﻿SRC_ROOT := src
+SRC_DIR := src/be/uliege/montefiore/oop
+JAR_FILE := lib/sliding-puzzle-gui.jar
 MAIN_CLASS := be.uliege.montefiore.oop.SlidingPuzzle
 
-CP := .:$(JAR_FILE)
+CP := $(SRC_ROOT):$(JAR_FILE)
+SOURCES := $(shell find $(SRC_ROOT) -name "*.java")
 
 all: compile
 
 compile:
-	javac -cp $(CP) $(SRC_DIR)/*.java
+	javac -cp $(CP) $(SOURCES)
 
-# use ' make run ARGS="filename" '
+# use: make run ARGS="examples/klotski.spzl"
 run: compile
 	java -cp $(CP) $(MAIN_CLASS) $(ARGS)
 
 klotski: compile
-	java -cp $(CP) $(MAIN_CLASS) klotski.spzl
+	java -cp $(CP) $(MAIN_CLASS) examples/klotski.spzl
 
 15-puzzle: compile
-	java -cp $(CP) $(MAIN_CLASS) 15-puzzle.spzl
+	java -cp $(CP) $(MAIN_CLASS) examples/15-puzzle.spzl
 
 test: compile
-	java -cp $(CP) $(MAIN_CLASS) test.spzl
+	java -cp $(CP) $(MAIN_CLASS) examples/test.spzl
 
 clean:
-	find $(SRC_DIR) -type f -name "*.class" -exec rm -f {} +
+	find $(SRC_ROOT) -type f -name "*.class" -exec rm -f {} +

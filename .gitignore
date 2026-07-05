@@ -1,2 +1,11 @@
-.vscode
+﻿# Java build outputs
 *.class
+*.jar
+!lib/sliding-puzzle-gui.jar
+
+# IDE / OS
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
